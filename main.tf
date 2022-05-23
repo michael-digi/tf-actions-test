@@ -19,7 +19,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-2"
+  region = var.region
 }
 
 module "networking" {
@@ -27,17 +27,17 @@ module "networking" {
 
   public_private_subnet_pairs = [
     {
-      az          = "us-east-2a"
+      az          = "${var.region}a"
       cidr        = "176.16.64.0/20"
       public_cidr = "176.16.0.0/20"
     },
     {
-      az          = "us-east-2b"
+      az          = "${var.region}b"
       cidr        = "176.16.80.0/20"
       public_cidr = "176.16.16.0/20"
     },
     {
-      az          = "us-east-2c"
+      az          = "${var.region}c"
       cidr        = "176.16.96.0/20"
       public_cidr = "176.16.32.0/20"
     },
