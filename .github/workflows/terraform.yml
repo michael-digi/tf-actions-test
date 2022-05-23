@@ -46,6 +46,13 @@ name: 'Terraform'
 
 on: 
   workflow_dispatch:
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        description: 'AWS access'
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        description: 'AWS secret'
+        required: true
 
 permissions:
   contents: read
