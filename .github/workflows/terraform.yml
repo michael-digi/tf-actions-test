@@ -49,10 +49,12 @@ on:
     inputs:
       name:
         type: choice
-        description: Who to greet
+        description: Select region
         options: 
-          - monalisa
-          - cschleiden
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'
