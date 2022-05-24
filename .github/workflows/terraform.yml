@@ -99,8 +99,9 @@ jobs:
       run: |
         output=$(aws ec2 describe-availability-zones --region ${{ github.event.inputs.region }} | jq -r '.AvailabilityZones[].ZoneName')
         arr=($output)
-        if (( ${#arr[@]} < ${{ github.event.inputs.zones }} )); then 
-          echo You chose to deploy in ${{ github.event.inputs.zones }} zones, but there are only ${#arr[@]} Availability Zones in region ${{ github.event.inputs.region }};   exit 1
+        len=${#arr[@]}
+        if (( $len < ${{ github.event.inputs.zones }} )); then 
+          echo You chose to deploy in ${{ github.event.inputs.zones }} zones, but there are only $len Availability Zones in region ${{ github.event.inputs.region }};   exit 1
         fi;
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
