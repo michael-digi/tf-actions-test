@@ -50,11 +50,21 @@ on:
       region:
         type: choice
         description: Select region
+        default: us-east-1
         options: 
           - us-east-1
           - us-east-2
           - us-west-1
           - us-west-2
+      Availability Zones:
+        type: choice
+        default: 4
+        description: Select number of AZ's
+        options: 
+          - 1
+          - 2
+          - 3
+          - 4
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'
