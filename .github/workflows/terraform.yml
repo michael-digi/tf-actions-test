@@ -110,11 +110,12 @@ jobs:
       run: terraform fmt -check
     
     - name: aws cli
-      run: output=$(AWS_PROFILE=gck aws ec2 describe-availability-zones --region us-east-1 | jq -r '.AvailabilityZones[].ZoneName'); \
-        arr=($output)
-        if (( ${#arr[@]} == 6 )); then
-          exit 1
-        fi
+      run: |
+      output=$(AWS_PROFILE=gck aws ec2 describe-availability-zones --region us-east-1 | jq -r '.AvailabilityZones[].ZoneName')
+      arr=($output)
+      if (( ${#arr[@]} == 6 )); then
+      exit 1
+      fi
 
     # # Generates an execution plan for Terraform
     # - name: Terraform Plan
