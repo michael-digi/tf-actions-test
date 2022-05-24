@@ -113,7 +113,7 @@ jobs:
       run: |
         output=$(aws ec2 describe-availability-zones --region us-east-1 | jq -r '.AvailabilityZones[].ZoneName')
         arr=($output)
-        if (( ${#arr[@]} == 6 )); then 
+        if (( ${#arr[@]} < 6 )); then 
           exit 1
         fi;
 
