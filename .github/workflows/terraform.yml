@@ -111,10 +111,10 @@ jobs:
     
     - name: aws cli
       run: |
-        output=$(AWS_PROFILE=gck aws ec2 describe-availability-zones --region us-east-1 | jq -r '.AvailabilityZones[].ZoneName') \
-        arr=($output) \
-        if (( ${#arr[@]} == 6 )); then \
-          exit 1 \
+        output=$(AWS_PROFILE=gck aws ec2 describe-availability-zones --region us-east-1 | jq -r '.AvailabilityZones[].ZoneName')
+        arr=($output)
+        if (( ${#arr[@]} == 6 )); then 
+          exit 1
         fi;
 
     # # Generates an execution plan for Terraform
