@@ -108,6 +108,9 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
+    
+    - name: aws cli
+      run: aws ec2 describe-availability-zones --region us-east-1
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
