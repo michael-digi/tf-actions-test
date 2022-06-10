@@ -24,28 +24,6 @@ provider "aws" {
 
 module "networking" {
   source = "./terraform-aws-networking"
-
-  public_private_subnet_pairs = [
-    {
-      az          = "${var.region}a"
-      cidr        = "176.16.64.0/20"
-      public_cidr = "176.16.0.0/20"
-    },
-    {
-      az          = "${var.region}b"
-      cidr        = "176.16.80.0/20"
-      public_cidr = "176.16.16.0/20"
-    },
-    {
-      az          = "${var.region}c"
-      cidr        = "176.16.96.0/20"
-      public_cidr = "176.16.32.0/20"
-    },
-    # {
-    #   az          = "us-east-1d"
-    #   cidr        = "176.16.112.0/20"
-    #   public_cidr = "176.16.48.0/20"
-    # },
-  ]
-  vpc_primary_cidr = "176.16.0.0/16"
+  public_private_subnet_pairs = var.public_private_subnet_pairs
+  vpc_primary_cidr = var.vpc_cidr
 }

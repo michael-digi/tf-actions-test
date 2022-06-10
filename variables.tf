@@ -16,7 +16,8 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "public_private_subnet_pairs_dev" {
+
+variable "public_private_subnet_pairs" {
     default = [{
       az          = "${var.region}a"
       cidr        = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, count.index)
