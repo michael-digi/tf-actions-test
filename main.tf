@@ -24,7 +24,7 @@ provider "aws" {
 
 module "networking" {
   source = "./terraform-aws-networking"
-  count = 1
+  count  = 1
 
   public_private_subnet_pairs = [{
     az          = "${var.region}a"
