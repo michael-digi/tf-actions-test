@@ -24,7 +24,7 @@ provider "aws" {
 
 module "networking" {
   source = "./terraform-aws-networking"
-  count  = var.zones
+  count  = var.subnets
 
   public_private_subnet_pairs = [{
     az          = join("", var.region, var.availability_zone_postfix[count.index])
