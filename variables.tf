@@ -18,7 +18,7 @@ variable "availability_zone_postfix" {
 variable "region" {
   description = "Region to deploy to"
   type        = string
-  default     = "us-east-1"
+  default     = "us-west-2"
 }
 
 variable "subnets" {
