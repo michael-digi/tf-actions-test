@@ -39,7 +39,7 @@ locals {
 # }
 
 module "ecr_repo" {
-  source = "github.com/7factor/terraform-ecr"
+  source = "./terraform-aws-ecr"
 
   repository_list   = ["gck-portal"]
   pull_account_list = [417363389520]
