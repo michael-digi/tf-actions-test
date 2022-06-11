@@ -24,11 +24,12 @@ provider "aws" {
 
 module "networking" {
   source = "./terraform-aws-networking"
+  count = 1
 
-  public_private_subnet_pairs = {
+  public_private_subnet_pairs = [{
     az          = "${var.region}a"
     cidr        = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, count.index)
     public_cidr = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, count.index)
-  }
+  }]
   vpc_primary_cidr = "172.16.0.0/16"
 }
