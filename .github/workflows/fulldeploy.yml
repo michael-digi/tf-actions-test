@@ -102,28 +102,25 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-
-    - name: Check
-      run: echo basename $0
     
-    # - name: aws cli
-    #   run: |
-    #     output=$(aws ec2 describe-availability-zones --region ${{ github.event.inputs.region }} | jq -r '.AvailabilityZones[].ZoneName')
-    #     arr=($output)
-    #     len=${#arr[@]}
-    #     if (( $len < ${{ github.event.inputs.subnets }} )); then 
-    #       echo You chose to deploy in ${{ github.event.inputs.subnets }} zones, but there are only $len Availability Zones in region ${{ github.event.inputs.region }};   exit 1
-    #     fi;
+    - name: aws cli
+      run: |
+        output=$(aws ec2 describe-availability-zones --region ${{ github.event.inputs.region }} | jq -r '.AvailabilityZones[].ZoneName')
+        arr=($output)
+        len=${#arr[@]}
+        if (( $len < ${{ github.event.inputs.subnets }} )); then 
+          echo You chose to deploy in ${{ github.event.inputs.subnets }} zones, but there are only $len Availability Zones in region ${{ github.event.inputs.region }};   exit 1
+        fi;
 
-    # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    # - name: Setup Terraform
-    #   uses: hashicorp/setup-terraform@v1
-    #   with:
-    #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    # # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    # - name: Terraform Init
-    #   run: terraform init
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: cd fulldeploy; terraform init
 
     # # Checks that all Terraform configuration files adhere to a canonical format
     # - name: Terraform Format
