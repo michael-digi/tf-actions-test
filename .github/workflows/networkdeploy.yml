@@ -97,7 +97,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: fulldeploy
+        working-directory: networkdeploy
 
     steps:
     # Checkout the repository to the GitHub Actions runner
