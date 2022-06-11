@@ -27,7 +27,7 @@ module "networking" {
   count  = var.subnets
 
   public_private_subnet_pairs = [{
-    az          = join("", var.region, var.availability_zone_postfix[count.index])
+    az          = join("", ["${var.region}, ${var.availability_zone_postfix[count.index]}"])
     cidr        = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, count.index)
     public_cidr = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, count.index)
   }]
