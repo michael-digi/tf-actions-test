@@ -65,6 +65,16 @@ on:
           - 2
           - 3
           - 4
+          - 5
+          - 6
+      environment:
+        type: choice
+        default: 4
+        description: Select environment to deploy
+        options: 
+          - Production
+          - Dev
+          - Staging
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'
@@ -83,7 +93,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ github.event.inputs.environment }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
