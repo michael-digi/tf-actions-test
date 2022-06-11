@@ -104,7 +104,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Check
-      run: echo $0
+      run: echo basename $0
     
     # - name: aws cli
     #   run: |
