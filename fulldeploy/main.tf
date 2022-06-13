@@ -23,7 +23,7 @@ provider "aws" {
 }
 
 data "aws_acm_certificate" "test_com" {
-  domain = "michaelpdigiorgio.com"
+  domain = "www.michaelpdigiorgio.com"
 }
 
 locals {
