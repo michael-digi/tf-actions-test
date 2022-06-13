@@ -12,8 +12,8 @@ resource "aws_ecs_task_definition" "gck_portal" {
     essential = true
     portMappings = [{
       protocol      = "tcp"
-      containerPort = var.container_port
-      hostPort      = var.container_port
+      containerPort = 80
+      hostPort      = 80
     }]
   }])
 }
