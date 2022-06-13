@@ -12,7 +12,7 @@ variable "vpc_subnet_indices" {
 variable "availability_zone_postfix" {
   description = "Region postfix"
   type        = list(any)
-  default     = ["a", "b", "c", "d", "e", "f"]
+  default     = ["a", "b", "c", "d"]
 }
 
 variable "region" {

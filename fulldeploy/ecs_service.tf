@@ -1,0 +1,25 @@
+resource "aws_ecs_service" "gck_portal" {
+  name                               = "gck-portal-service-prod"
+  cluster                            = aws_ecs_cluster.gck_portal.id
+  task_definition                    = aws_ecs_task_definition.gck_portal.arn
+  desired_count                      = 2
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent         = 200
+  launch_type                        = "FARGATE"
+  scheduling_strategy                = "REPLICA"
+
+  network_configuration {
+    subnets          = module.terraform-aws-networking.private_subnets.*.id
+    assign_public_ip = false
+  }
+
+  load_balancer {
+    target_group_arn = aws_alb_target_group.gck_portal.arn
+    container_name   = "gck-portal-container-prod"
+    container_port   = 80
+  }
+
+  lifecycle {
+    ignore_changes = [task_definition, desired_count]
+  }
+}

@@ -1,6 +1,7 @@
 TERRAFORM_VERSION := 1.1.7
-REGION := us-east-2
-AWS_PROFILE := gck
+REGION := us-east-1
+AWS_PROFILE := test
+AWS := AWS_PROFILE=${AWS_PROFILE} aws
 TERRAFORM := docker run --rm -it -e AWS_PROFILE=${AWS_PROFILE} -e AWS_REGION=${REGION} -v ~/.aws:/root/.aws -v ${PWD}:/data -w /data hashicorp/terraform:${TERRAFORM_VERSION}
 
 # Quick terraform dot folder cleanup.
@@ -33,3 +34,10 @@ apply:
 pull:
 	AWS_PROFILE=gck aws ecr get-login-password | docker login --username AWS --password-stdin 314694303532.dkr.ecr.us-west-2.amazonaws.com
 		docker pull 314694303532.dkr.ecr.us-west-2.amazonaws.com/gck_web:latest
+
+login:
+	${AWS} ecr get-login-password | docker login --username AWS --password-stdin 417363389520.dkr.ecr.us-east-1.amazonaws.com
+
+push: login
+	$(eval ECR := $(shell ${AWS} ecr describe-repositories --query "repositories[?repositoryName=='gck_portal'].repositoryUri" --output text))
+	docker push ${ECR}:latest

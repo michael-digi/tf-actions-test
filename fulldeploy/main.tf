@@ -22,6 +22,10 @@ provider "aws" {
   region = var.region
 }
 
+data "aws_acm_certificate" "test_com" {
+  domain = "michaelpdigiorgio.com"
+}
+
 locals {
   subnets = [
     for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {

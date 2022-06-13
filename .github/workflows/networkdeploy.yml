@@ -61,8 +61,6 @@ on:
         default: 4
         description: Select number of subnets
         options: 
-          - 1
-          - 2
           - 3
           - 4
       environment:

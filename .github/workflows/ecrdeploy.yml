@@ -56,15 +56,6 @@ on:
           - us-east-2
           - us-west-1
           - us-west-2
-      subnets:
-        type: choice
-        default: 4
-        description: Select number of subnets
-        options: 
-          - 1
-          - 2
-          - 3
-          - 4
       environment:
         type: choice
         default: 4
