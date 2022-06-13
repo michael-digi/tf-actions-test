@@ -9,7 +9,7 @@ resource "aws_ecs_service" "gck_portal" {
   scheduling_strategy                = "REPLICA"
 
   network_configuration {
-    subnets          = module.terraform-aws-networking.private_subnets.*.id
+    subnets          = module.networking.private_subnets
     assign_public_ip = false
   }
 

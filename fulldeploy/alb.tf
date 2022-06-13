@@ -5,7 +5,7 @@ resource "aws_lb" "gck_portal" {
   security_groups = [
     aws_security_group.alb.id
   ]
-  subnets = module.terraform-aws-networking.private_subnets
+  subnets = module.networking.private_subnets
 
   enable_deletion_protection = false
 }
@@ -14,7 +14,7 @@ resource "aws_alb_target_group" "gck_portal" {
   name        = "gck-portal-tg-prod"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = module.terraform-aws-networking.vpc_id
+  vpc_id      = module.networking.vpc_id
   target_type = "ip"
 
   health_check {
