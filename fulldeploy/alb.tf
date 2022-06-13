@@ -44,16 +44,16 @@ resource "aws_alb_listener" "http" {
   }
 }
 
-resource "aws_alb_listener" "https" {
-  load_balancer_arn = aws_lb.gck_portal.id
-  port              = 443
-  protocol          = "HTTPS"
+# resource "aws_alb_listener" "https" {
+#   load_balancer_arn = aws_lb.gck_portal.id
+#   port              = 443
+#   protocol          = "HTTPS"
 
-  ssl_policy      = "ELBSecurityPolicy-2016-08"
-  certificate_arn = data.aws_acm_certificate.test_com
+#   ssl_policy      = "ELBSecurityPolicy-2016-08"
+#   certificate_arn = data.aws_acm_certificate.test_com
 
-  default_action {
-    target_group_arn = aws_alb_target_group.gck_portal.id
-    type             = "forward"
-  }
-}
+#   default_action {
+#     target_group_arn = aws_alb_target_group.gck_portal.id
+#     type             = "forward"
+#   }
+# }
