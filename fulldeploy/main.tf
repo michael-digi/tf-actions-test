@@ -22,9 +22,9 @@ provider "aws" {
   region = var.region
 }
 
-data "aws_acm_certificate" "test_com" {
-  domain = "www.michaelpdigiorgio.com"
-}
+# data "aws_acm_certificate" "test_com" {
+#   domain = "www.michaelpdigiorgio.com"
+# }
 
 locals {
   subnets = [
