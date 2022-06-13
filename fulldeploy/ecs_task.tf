@@ -10,5 +10,10 @@ resource "aws_ecs_task_definition" "gck_portal" {
     name      = "gck-portal-container-prod"
     image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/gck_portal:latest"
     essential = true
+    portMappings = [{
+      protocol      = "tcp"
+      containerPort = var.container_port
+      hostPort      = var.container_port
+    }]
   }])
 }
