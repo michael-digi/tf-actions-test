@@ -28,7 +28,7 @@ variable "subnets" {
 }
 
 variable "environment" {
-    description = "Environment deploying to"
-    type        = string
-    default     = "dev"
+  description = "Environment deploying to"
+  type        = string
+  default     = "dev"
 }
