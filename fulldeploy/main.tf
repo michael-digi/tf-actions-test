@@ -39,7 +39,7 @@ module "networking" {
   source = "./terraform-aws-networking"
 
   public_private_subnet_pairs = local.subnets
-  vpc_primary_cidr            = "172.16.0.0/16" // will be determined by dev/staging/prod vars
+  vpc_primary_cidr            = var.vpc_cidr // will be determined by dev/staging/prod vars
 }
 
 module "ecr_repo" {

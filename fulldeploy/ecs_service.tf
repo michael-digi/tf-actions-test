@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "gck_portal" {
-  name                               = "gck-portal-service-prod"
+  name                               = "gck-portal-service-${var.environment}"
   cluster                            = aws_ecs_cluster.gck_portal.id
   task_definition                    = aws_ecs_task_definition.gck_portal.arn
   desired_count                      = 2
@@ -15,7 +15,7 @@ resource "aws_ecs_service" "gck_portal" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.gck_portal.arn
-    container_name   = "gck-portal-container-prod"
+    container_name   = "gck-portal-container-${var.environment}"
     container_port   = 80
   }
 

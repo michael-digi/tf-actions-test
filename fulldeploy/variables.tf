@@ -9,6 +9,8 @@ variable "vpc_subnet_indices" {
   }
 }
 
+
+
 variable "availability_zone_postfix" {
   description = "Region postfix"
   type        = list(any)
