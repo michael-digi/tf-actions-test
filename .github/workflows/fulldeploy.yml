@@ -101,7 +101,7 @@ jobs:
     
     # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
-      if: github.event.inputs.environment == staging
+      if: github.event.inputs.environment == 'staging'
       run: |
         echo ${{ github.event.inputs.environment }} == 'staging'
         echo "${{ github.event.inputs.environment }}"
@@ -110,7 +110,7 @@ jobs:
     
      # This step is run when the tag is release-XXX
     - name: Sets env vars for production
-      if: github.event.inputs.environment == production
+      if: github.event.inputs.environment == 'production'
       run: |
         echo ${{ github.event.inputs.environment }} == 'production'
         echo "${{ github.event.inputs.environment }}"
