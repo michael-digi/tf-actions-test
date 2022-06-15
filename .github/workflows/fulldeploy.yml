@@ -92,7 +92,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: fulldeploy
+        working-directory: ../deployments/fulldeploy
 
     steps:
     # Checkout the repository to the GitHub Actions runner

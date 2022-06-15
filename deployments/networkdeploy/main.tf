@@ -36,7 +36,7 @@ locals {
 }
 
 module "networking" {
-  source = "./terraform-aws-networking"
+  source = "../../terraform-aws-networking"
 
   public_private_subnet_pairs = local.subnets
   vpc_primary_cidr            = local.vpc_cidr

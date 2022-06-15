@@ -40,7 +40,7 @@ locals {
 }
 
 module "networking" {
-  source      = "../terraform-aws-networking"
+  source      = "../../terraform-aws-networking"
   vpc_name    = "New"
   environment = var.environment
 
@@ -49,7 +49,7 @@ module "networking" {
 }
 
 module "ecr_repo" {
-  source = "../terraform-aws-ecr"
+  source = "../../terraform-aws-ecr"
 
   repository_list   = ["gck-portal"]
   pull_account_list = [417363389520]
