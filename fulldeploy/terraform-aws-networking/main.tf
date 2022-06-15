@@ -16,7 +16,7 @@ resource "aws_vpc" "primary_vpc" {
   enable_dns_support   = var.enable_dns_support
 
   tags = {
-    Name = "7Factor_${var.environment}"
+    Name = "${var.vpc_name}_${var.environment}"
   }
 }
 
