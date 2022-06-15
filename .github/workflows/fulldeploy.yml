@@ -78,14 +78,6 @@ on:
       AWS_SECRET_ACCESS_KEY:
         description: 'AWS secret'
         required: true
-env:
-  if: ${{ github.event.inputs.environment }} == 'staging' || ${{ github.event.inputs.environment }} == 'dev'
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
-  
-  if: ${{ github.event.inputs.environment }} == 'production'
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 permissions:
   contents: read
@@ -107,7 +99,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     
-    - name: aws cli
+    - name: Check number of Availability Zones
       run: |
         output=$(aws ec2 describe-availability-zones --region ${{ github.event.inputs.region }} | jq -r '.AvailabilityZones[].ZoneName')
         arr=($output)
@@ -121,6 +113,20 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    
+    # This step is run when the tag is release-XXX
+    - name: Sets env vars for production
+      run: |
+        echo "AWS_ACCESS_KEY_ID=AWS_ACCESS_KEY_ID_STAGING" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=AWS_SECRET_ACCESS_KEY_STAGING" >> $GITHUB_ENV
+      if: ${{ github.event.inputs.environment }} == 'staging'
+
+    # This step is run when the tag is staging-XXX
+    - name: Sets env vars for staging
+      run: |
+        echo "AWS_ACCESS_KEY_ID=AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+      if: ${{ github.event.inputs.environment }} == 'production'
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
