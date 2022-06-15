@@ -27,11 +27,15 @@ provider "aws" {
 # }
 
 locals {
+    vpc_cidr = var.environment == "production" ? "172.16.0.0/16" : (var.environment == "staging" ? "10.0.0.0/16" : "192.168.0.0/16")
+}
+
+locals {
   subnets = [
     for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {
       az          = join("", ["${var.region}", "${az}"])
-      cidr        = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
-      public_cidr = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
+      cidr        = cidrsubnet(cidrsubnet(local.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
+      public_cidr = cidrsubnet(cidrsubnet(local.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
   }]
 }
 
@@ -39,7 +43,7 @@ module "networking" {
   source = "./terraform-aws-networking"
 
   public_private_subnet_pairs = local.subnets
-  vpc_primary_cidr            = var.vpc_cidr // will be determined by dev/staging/prod vars
+  vpc_primary_cidr            = local.vpc_cidr // will be determined by dev/staging/prod vars
 }
 
 module "ecr_repo" {
