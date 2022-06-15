@@ -46,25 +46,16 @@ locals {
 }
 
 module "networking" {
-  source      = "./terraform-aws-networking"
-  vpc_name    = "S"
+  source      = "../terraform-aws-networking"
+  vpc_name    = "New"
   environment = var.environment
 
-  public_private_subnet_pairs = local.staging_subnets
-  vpc_primary_cidr            = "10.0.0.0/16" // will be determined by dev/staging/prod vars
-}
-
-module "networking" {
-  source      = "./terraform-aws-networking"
-  vpc_name    = "P"
-  environment = var.environment
-
-  public_private_subnet_pairs = local.prod_subnets
-  vpc_primary_cidr            = "172.16.0.0/16" // will be determined by dev/staging/prod vars
+  public_private_subnet_pairs = local.subnets
+  vpc_primary_cidr            = local.vpc_cidr // will be determined by dev/staging/prod vars
 }
 
 module "ecr_repo" {
-  source = "./terraform-aws-ecr"
+  source = "../terraform-aws-ecr"
 
   repository_list   = ["gck-portal"]
   pull_account_list = [417363389520]
