@@ -31,17 +31,11 @@ locals {
 }
 
 locals {
-  staging_subnets = [
+  subnets = [
     for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {
       az          = join("", ["${var.region}", "${az}"])
       cidr        = cidrsubnet(cidrsubnet("10.0.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
       public_cidr = cidrsubnet(cidrsubnet("10.0.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
-  }]
-  prod_subnets = [
-    for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {
-      az          = join("", ["${var.region}", "${az}"])
-      cidr        = cidrsubnet(cidrsubnet("172.16.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
-      public_cidr = cidrsubnet(cidrsubnet("172.16.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
   }]
 }
 
