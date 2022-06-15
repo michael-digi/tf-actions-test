@@ -1,5 +1,5 @@
 resource "aws_security_group" "alb" {
-  name   = "gck-portal-sg-alb-prod"
+  name   = "gck-portal-sg-alb-${var.environment}"
   vpc_id = module.networking.vpc_id
 
   ingress {
