@@ -40,7 +40,7 @@ locals {
 }
 
 module "networking" {
-  source = "./terraform-aws-networking"
+  source   = "./terraform-aws-networking"
   vpc_name = "New"
 
   public_private_subnet_pairs = local.subnets
