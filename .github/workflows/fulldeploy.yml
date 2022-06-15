@@ -65,12 +65,12 @@ on:
           - 4
       environment:
         type: choice
-        default: 4
+        default: Dev
         description: Select environment to deploy
         options: 
-          - Production
-          - Dev
-          - Staging
+          - production
+          - dev
+          - staging
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'
@@ -79,6 +79,11 @@ on:
         description: 'AWS secret'
         required: true
 env:
+  if: ${{ github.event.inputs.environment }} == 'staging' || ${{ github.event.inputs.environment }} == 'dev'
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
+  
+  if: ${{ github.event.inputs.environment }} == 'production'
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 

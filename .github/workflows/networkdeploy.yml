@@ -65,7 +65,7 @@ on:
           - 4
       environment:
         type: choice
-        default: 4
+        default: Dev
         description: Select environment to deploy
         options: 
           - Production
