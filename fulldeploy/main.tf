@@ -27,7 +27,7 @@ provider "aws" {
 # }
 
 locals {
-    vpc_cidr = var.environment == "production" ? "172.16.0.0/16" : (var.environment == "staging" ? "10.0.0.0/16" : "192.168.0.0/16")
+  vpc_cidr = var.environment == "production" ? "172.16.0.0/16" : (var.environment == "staging" ? "10.0.0.0/16" : "192.168.0.0/16")
 }
 
 locals {
