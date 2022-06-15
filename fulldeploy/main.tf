@@ -31,21 +31,36 @@ locals {
 }
 
 locals {
-  subnets = [
+  staging_subnets = [
     for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {
       az          = join("", ["${var.region}", "${az}"])
-      cidr        = cidrsubnet(cidrsubnet(local.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
-      public_cidr = cidrsubnet(cidrsubnet(local.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
+      cidr        = cidrsubnet(cidrsubnet("10.0.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
+      public_cidr = cidrsubnet(cidrsubnet("10.0.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
+  }]
+  prod_subnets = [
+    for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {
+      az          = join("", ["${var.region}", "${az}"])
+      cidr        = cidrsubnet(cidrsubnet("172.16.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
+      public_cidr = cidrsubnet(cidrsubnet("172.16.0.0/16", var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
   }]
 }
 
 module "networking" {
   source      = "./terraform-aws-networking"
-  vpc_name    = "New"
+  vpc_name    = "S"
   environment = var.environment
 
-  public_private_subnet_pairs = local.subnets
-  vpc_primary_cidr            = local.vpc_cidr // will be determined by dev/staging/prod vars
+  public_private_subnet_pairs = local.staging_subnets
+  vpc_primary_cidr            = "10.0.0.0/16" // will be determined by dev/staging/prod vars
+}
+
+module "networking" {
+  source      = "./terraform-aws-networking"
+  vpc_name    = "P"
+  environment = var.environment
+
+  public_private_subnet_pairs = local.prod_subnets
+  vpc_primary_cidr            = "172.16.0.0/16" // will be determined by dev/staging/prod vars
 }
 
 module "ecr_repo" {
