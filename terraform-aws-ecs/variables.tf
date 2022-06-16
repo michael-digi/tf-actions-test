@@ -41,8 +41,8 @@ variable "private_subnets" {
   default     = []
 }
 
-variable "vpc_cidr" {
-  description = "CIDR of VPC"
+variable "vpc_id" {
+  description = "ID of VPC"
   type        = string
   default     = ""
 }
