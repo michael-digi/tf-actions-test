@@ -92,7 +92,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/fulldeploy
+        working-directory: deployments/fulldeploy/${{ github.event.inputs.environment }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
