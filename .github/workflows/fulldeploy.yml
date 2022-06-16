@@ -69,7 +69,6 @@ on:
         description: Select environment to deploy
         options: 
           - production
-          - dev
           - staging
     secrets:
       AWS_ACCESS_KEY_ID:
