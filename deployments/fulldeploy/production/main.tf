@@ -35,17 +35,17 @@ locals {
     },
     {
       az          = "${var.region}b"
-      cidr        = "172.16.80.0/24"
+      cidr        = "172.16.80.0/20"
       public_cidr = "172.16.16.0/20"
     },
     {
       az          = "${var.region}c"
-      cidr        = "172.16.96.0/24"
+      cidr        = "172.16.96.0/20"
       public_cidr = "172.16.32.0/20"
     },
     var.subnets == 4 ? [{
       az          = "${var.region}d"
-      cidr        = "172.16.112.0/24"
+      cidr        = "172.16.112.0/20"
       public_cidr = "172.16.48.0/20"
     }] : []
   ])
