@@ -46,7 +46,7 @@ module "networking_staging" {
   vpc_name = "New"
 
   public_private_subnet_pairs = local.subnets_staging
-  vpc_primary_cidr            = local.vpc_cidr_staging // will be determined by dev/staging/prod vars
+  vpc_primary_cidr            = var.vpc_cidr_staging // will be determined by dev/staging/prod vars
 }
 
 module "networking_dev" {
@@ -54,7 +54,7 @@ module "networking_dev" {
   vpc_name = "New"
 
   public_private_subnet_pairs = local.subnets_dev
-  vpc_primary_cidr            = local.vpc_cidr_dev // will be determined by dev/staging/prod vars
+  vpc_primary_cidr            = var.vpc_cidr_dev // will be determined by dev/staging/prod vars
 }
 
 module "ecs_staging" {
