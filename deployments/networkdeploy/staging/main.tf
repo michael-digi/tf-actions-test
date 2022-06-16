@@ -85,17 +85,3 @@ module "networking_dev" {
   public_private_subnet_pairs = local.subnets_pairs_dev
   vpc_primary_cidr            = var.vpc_cidr_dev // will be determined by dev/staging/prod vars
 }
-
-module "ecs_staging" {
-  source          = "../../../terraform-aws-ecs"
-  private_subnets = module.networking_staging.private_subnets
-
-  vpc_id = module.networking_staging.vpc_id
-}
-
-module "ecs_dev" {
-  source          = "../../../terraform-aws-ecs"
-  private_subnets = module.networking_dev.private_subnets
-
-  vpc_id = module.networking_dev.vpc_id
-}
