@@ -34,3 +34,9 @@ variable "environment" {
   type        = string
   default     = "dev"
 }
+
+variable "private_subnets" {
+  description = "List of private "
+  type        = list
+  default     = []
+}
