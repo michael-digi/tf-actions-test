@@ -27,19 +27,44 @@ provider "aws" {
 # }
 
 locals {
-  subnets = [
-    for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {
-      az          = join("", ["${var.region}", "${az}"])
-      cidr        = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
-      public_cidr = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
-  }]
+  subnet_pairs = flatten([
+    {
+      az          = "${var.region}a"
+      cidr        = "172.16.64.0/20"
+      public_cidr = "172.16.0.0/20"
+    },
+    {
+      az          = "${var.region}b"
+      cidr        = "172.16.80.0/24"
+      public_cidr = "172.16.16.0/20"
+    },
+    {
+      az          = "${var.region}c"
+      cidr        = "172.16.96.0/24"
+      public_cidr = "172.16.32.0/20"
+    },
+    var.subnets == 4 ? [{
+      az          = "${var.region}d"
+      cidr        = "172.16.112.0/24"
+      public_cidr = "172.16.48.0/20"
+    }] : []
+  ])
 }
+
+# locals {
+#   subnets = [
+#     for index, az in slice(var.availability_zone_postfix, 0, var.subnets) : {
+#       az          = join("", ["${var.region}", "${az}"])
+#       cidr        = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "private")), var.vpc_zone_bits, index)
+#       public_cidr = cidrsubnet(cidrsubnet(var.vpc_cidr, var.vpc_subnet_bits, lookup(var.vpc_subnet_indices, "public")), var.vpc_zone_bits, index)
+#   }]
+# }
 
 module "networking" {
   source   = "../../../terraform-aws-networking"
   vpc_name = "New"
 
-  public_private_subnet_pairs = local.subnets
+  public_private_subnet_pairs = local.subnet_pairs
   vpc_primary_cidr            = var.vpc_cidr // will be determined by dev/staging/prod vars
 }
 
