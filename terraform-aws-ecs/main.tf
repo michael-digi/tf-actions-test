@@ -40,16 +40,16 @@ locals {
 }
 
 module "networking" {
-  source   = "../../terraform-aws-networking"
-  vpc_name = "New"
+  source      = "../../terraform-aws-networking"
+  vpc_name    = "New"
 
   public_private_subnet_pairs = local.subnets
   vpc_primary_cidr            = local.vpc_cidr // will be determined by dev/staging/prod vars
 }
 
-module "ecs" {
-  source          = "../../terraform-aws-ecs"
-  private_subnets = module.networking.private_subnets
+module "ecr_repo" {
+  source = "../../terraform-aws-ecr"
 
-  vpc_id = module.networking.vpc_id
+  repository_list   = ["gck-portal"]
+  pull_account_list = [417363389520]
 }
