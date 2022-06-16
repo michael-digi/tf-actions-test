@@ -36,7 +36,7 @@ locals {
 }
 
 module "networking" {
-  source   = "../../terraform-aws-networking"
+  source   = "../../../terraform-aws-networking"
   vpc_name = "New"
 
   public_private_subnet_pairs = local.subnets
@@ -44,7 +44,7 @@ module "networking" {
 }
 
 module "ecs" {
-  source          = "../../terraform-aws-ecs"
+  source          = "../../../terraform-aws-ecs"
   private_subnets = module.networking.private_subnets
 
   vpc_id = module.networking.vpc_id

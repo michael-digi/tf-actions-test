@@ -42,7 +42,7 @@ locals {
 }
 
 module "networking_staging" {
-  source   = "../../terraform-aws-networking"
+  source   = "../../../terraform-aws-networking"
   vpc_name = "New"
 
   public_private_subnet_pairs = local.subnets_staging
@@ -50,7 +50,7 @@ module "networking_staging" {
 }
 
 module "networking_dev" {
-  source   = "../../terraform-aws-networking"
+  source   = "../../../terraform-aws-networking"
   vpc_name = "New"
 
   public_private_subnet_pairs = local.subnets_dev
@@ -58,14 +58,14 @@ module "networking_dev" {
 }
 
 module "ecs_staging" {
-  source          = "../../terraform-aws-ecs"
+  source          = "../../../terraform-aws-ecs"
   private_subnets = module.networking_staging.private_subnets
 
   vpc_id = module.networking_staging.vpc_id
 }
 
 module "ecs_dev" {
-  source          = "../../terraform-aws-ecs"
+  source          = "../../../terraform-aws-ecs"
   private_subnets = module.networking_dev.private_subnets
 
   vpc_id = module.networking_dev.vpc_id
