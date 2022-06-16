@@ -40,3 +40,9 @@ variable "private_subnets" {
   type        = list
   default     = []
 }
+
+variable "vpc_cidr" {
+  description = "CIDR of VPC"
+  type        = string
+  default     = ""
+}
