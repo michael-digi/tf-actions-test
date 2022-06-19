@@ -74,7 +74,7 @@ module "networking_staging" {
   source   = "../../../terraform-aws-networking"
   vpc_name = "New_staging"
 
-  public_private_subnet_pairs = local.subnets_pairs_staging
+  public_private_subnet_pairs = local.subnet_pairs_staging
   vpc_primary_cidr            = var.vpc_cidr_staging // will be determined by dev/staging/prod vars
 }
 
@@ -82,7 +82,7 @@ module "networking_dev" {
   source   = "../../../terraform-aws-networking"
   vpc_name = "New_dev"
 
-  public_private_subnet_pairs = local.subnets_pairs_dev
+  public_private_subnet_pairs = local.subnet_pairs_dev
   vpc_primary_cidr            = var.vpc_cidr_dev // will be determined by dev/staging/prod vars
 }
 
