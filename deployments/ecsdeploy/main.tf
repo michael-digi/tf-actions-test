@@ -22,14 +22,20 @@ provider "aws" {
   region = var.region
 }
 
-data "aws_vpc" "primary_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = ["Primary_${var.env}"]
-  }
+variable "vpc_id" {}
 
+data "aws_vpc" "selected" {
   id = var.vpc_id
 }
+
+# data "aws_vpc" "primary_vpc" {
+#   filter {
+#     name   = "tag:Name"
+#     values = ["Primary_${var.env}"]
+#   }
+
+#   id = var.vpc_id
+# }
 
 data "aws_subnets" "private" {
   filter {
@@ -81,5 +87,5 @@ module "ecs" {
   private_subnets = local.private_subnet_cidr_blocks.value
   public_subnets  = local.public_subnet_cidr_blocks.value
 
-  vpc_id = data.aws_vpc.primary_vpc.id
+  vpc_id = data.aws_vpc.selected.id
 }
