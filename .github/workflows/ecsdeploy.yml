@@ -1,7 +1,6 @@
 name: 'ECS Deploy'
 
 on: 
-  on:
   push:
     branches:
       - main
