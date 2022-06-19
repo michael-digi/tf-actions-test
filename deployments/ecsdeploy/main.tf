@@ -24,7 +24,7 @@ provider "aws" {
 
 data "aws_vpc" "vpc" {
   filter {
-    name = "tag:Name"
+    name   = "tag:Name"
     values = ["Primary_${var.env}"]
   }
 }
