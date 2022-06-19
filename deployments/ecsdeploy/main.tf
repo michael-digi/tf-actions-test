@@ -63,21 +63,19 @@ data "aws_subnet" "public" {
   id       = each.value
 }
 
-locals {
-  public_subnet_cidr_blocks = {
-    value = [for s in data.aws_subnet.public : s.cidr_block]
-  }
+variable "public_subnet_cidr_blocks" {
+  value = [for s in data.aws_subnet.public : s.cidr_block]
+}
 
-  private_subnet_cidr_blocks = {
-    value = [for s in data.aws_subnet.private : s.cidr_block]
-  }
+variable "private_subnet_cidr_blocks" {
+  value = [for s in data.aws_subnet.private : s.cidr_block]
 }
 
 module "ecs" {
   source = "../../terraform-aws-ecs"
 
-  private_subnets = var.private_subnet_cidr_blocks
-  public_subnets  = var.public_subnet_cidr_blocks
+  private_subnets = local.private_subnet_cidr_blocks
+  public_subnets  = local.public_subnet_cidr_blocks
 
   vpc_id = data.aws_vpc.primary_vpc.id
 }
