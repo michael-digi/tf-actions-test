@@ -5,7 +5,7 @@ resource "aws_lb" "gck_portal" {
   security_groups = [
     aws_security_group.alb.id
   ]
-  subnets = var.private_subnets
+  subnets = var.public_subnets
 
   enable_deletion_protection = false
 }
