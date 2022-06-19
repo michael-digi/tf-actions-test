@@ -64,13 +64,13 @@ data "aws_subnet" "public" {
 }
 
 locals {
-    public_subnet_cidr_blocks =  {
-        value = [for s in data.aws_subnet.public : s.cidr_block]
-    }
-    
-    private_subnet_cidr_blocks {
-        value = [for s in data.aws_subnet.private : s.cidr_block]
-    }
+  public_subnet_cidr_blocks = {
+    value = [for s in data.aws_subnet.public : s.cidr_block]
+  }
+
+  private_subnet_cidr_blocks {
+    value = [for s in data.aws_subnet.private : s.cidr_block]
+  }
 }
 
 module "ecs" {
