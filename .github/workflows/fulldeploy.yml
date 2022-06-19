@@ -56,7 +56,7 @@ jobs:
     
     # This step is run when the tag is release-XXX
     - name: Check event type
-      run: echo ${{ github.event }}
+      run: echo "${{ github.event.action }}"
     
     # # This step is run when the tag is release-XXX
     # - name: Sets env vars for staging
