@@ -56,10 +56,10 @@ module "networking" {
 }
 
 module "ecs" {
-  source          = "../../../terraform-aws-ecs"
-  
+  source = "../../../terraform-aws-ecs"
+
   private_subnets = module.networking.private_subnets
-  public_subnets = module.networking.public_subnets
-  
+  public_subnets  = module.networking.public_subnets
+
   vpc_id = module.networking.vpc_id
 }

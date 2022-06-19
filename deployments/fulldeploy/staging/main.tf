@@ -45,7 +45,7 @@ locals {
       public_cidr = "10.0.48.0/20"
     }] : []
   ])
-  
+
   subnet_pairs_dev = flatten([
     {
       az          = "${var.region}a"
