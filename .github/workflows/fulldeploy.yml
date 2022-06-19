@@ -87,7 +87,6 @@ jobs:
         if (( $len < ${{ github.event.inputs.subnets }} )); then 
           echo You chose to deploy in ${{ github.event.inputs.subnets }} zones, but there are only $len Availability Zones in region ${{ github.event.inputs.region }};   exit 1
         fi;
-
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -154,7 +153,6 @@ jobs:
         if (( $len < ${{ github.event.inputs.subnets }} )); then 
           echo You chose to deploy in ${{ github.event.inputs.subnets }} zones, but there are only $len Availability Zones in region ${{ github.event.inputs.region }};   exit 1
         fi;
-
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -172,6 +170,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true
+
     # On push to main, build or change infrastructure according to Terraform configuration files
     # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     # - name: Terraform Apply
