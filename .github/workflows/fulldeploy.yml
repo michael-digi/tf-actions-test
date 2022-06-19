@@ -97,6 +97,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
+      if: github.event_name == 'workflow_dispatch'
       run: terraform plan -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true
 
     # On push to main, build or change infrastructure according to Terraform configuration files
