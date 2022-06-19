@@ -1,10 +1,10 @@
 variable "vpc_cidr" { default = "172.16.0.0/16" }
 
-variable ecr_repo_main_region { default = "us-east-1"}
+variable "ecr_repo_main_region" { default = "us-east-1"}
 
-variable ecr_repo_main_account { default = "417363389520"}
+variable "ecr_repo_main_account" { default = "417363389520"}
 
-variable version { default = "latest" }
+variable "image_version" { default = "latest" }
 
 variable "region" {
   description = "Region to deploy to"
