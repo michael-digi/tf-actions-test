@@ -27,6 +27,8 @@ data "aws_vpc" "primary_vpc" {
     name   = "tag:Name"
     values = ["Primary_${var.env}"]
   }
+
+  id = var.vpc_id
 }
 
 data "aws_subnets" "private" {
