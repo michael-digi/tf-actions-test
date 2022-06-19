@@ -48,8 +48,8 @@ locals {
 }
 
 module "networking" {
-  source   = "../../../terraform-aws-networking"
-  vpc_name = "New"
+  source = "../../../terraform-aws-networking"
+  env    = var.env
 
   public_private_subnet_pairs = local.subnet_pairs
   vpc_primary_cidr            = var.vpc_cidr // will be determined by dev/staging/prod vars
