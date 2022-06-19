@@ -1,8 +1,8 @@
 variable "vpc_cidr" { default = "172.16.0.0/16" }
 
-variable "ecr_repo_main_region" { default = "us-east-1"}
+variable "ecr_repo_main_region" { default = "us-east-1" }
 
-variable "ecr_repo_main_account" { default = "417363389520"}
+variable "ecr_repo_main_account" { default = "417363389520" }
 
 variable "image_version" { default = "latest" }
 
@@ -26,13 +26,13 @@ variable "env" {
 
 variable "private_subnets" {
   description = "List of private subnets"
-  type        = list
+  type        = list(any)
   default     = []
 }
 
 variable "public_subnets" {
   description = "List of public subnets"
-  type        = list
+  type        = list(any)
   default     = []
 }
 

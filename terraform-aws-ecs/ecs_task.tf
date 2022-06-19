@@ -1,6 +1,6 @@
 resource "aws_ecs_task_definition" "gck_portal" {
   network_mode             = "awsvpc"
-  family                   = "${var.app_name}"
+  family                   = var.app_name
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
   memory                   = 512

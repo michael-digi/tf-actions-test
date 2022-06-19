@@ -30,7 +30,7 @@ resource "aws_subnet" "private_subnets" {
   tags = {
     Name = "Private Subnet (${lookup(var.public_private_subnet_pairs[count.index], "az")})"
     Tier = "Private Subnets"
-    Vpc = "Primary_${var.env}"
+    Vpc  = "Primary_${var.env}"
   }
 }
 
