@@ -81,11 +81,11 @@ output "variable2" {
   value = local.public_subnet_cidr_blocks
 }
 
-# module "ecs" {
-#   source = "../../terraform-aws-ecs"
+module "ecs" {
+  source = "../../terraform-aws-ecs"
 
-#   private_subnets = local.private_subnet_cidr_blocks
-#   public_subnets  = local.public_subnet_cidr_blocks
+  private_subnets = local.private_subnet_cidr_blocks.value
+  public_subnets  = local.public_subnet_cidr_blocks.value
 
-#   vpc_id = data.aws_vpc.primary_vpc.id
-# }
+  vpc_id = data.aws_vpc.primary_vpc.id
+}
