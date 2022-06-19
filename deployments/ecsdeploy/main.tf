@@ -73,6 +73,14 @@ locals {
   }
 }
 
+output "variable1" {
+  value = local.private_subnet_cidr_blocks
+}
+
+output "variable2" {
+  value = local.public_subnet_cidr_blocks
+}
+
 module "ecs" {
   source = "../../terraform-aws-ecs"
 
