@@ -41,7 +41,8 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
+  terraform-manual:
+    if: github.event_name == 'workflow_dispatch'
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.env }}
@@ -107,3 +108,4 @@ jobs:
     # - name: Terraform Apply
     #   if: github.event_name == 'merge'
     #   run: terraform apply -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -auto-approve -input=true
+  terraform-push:
