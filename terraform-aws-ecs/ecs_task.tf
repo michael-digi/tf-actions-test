@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "gck_portal" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   container_definitions = jsonencode([{
     name      = "${var.app_name}-container-${var.env}"
-    image     = "${var.ecr_repo_main_account}.dkr.ecr.${var.ecr_repo_main_region}.amazonaws.com/gck_portal_${var.env}:${var.image_version}"
+    image     = "${var.ecr_repo_main_account}.dkr.ecr.${var.ecr_repo_main_region}.amazonaws.com/gck_portal:${var.image_version}"
     essential = true
     portMappings = [{
       protocol      = "tcp"
