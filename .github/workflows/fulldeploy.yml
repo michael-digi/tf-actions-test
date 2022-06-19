@@ -19,7 +19,7 @@ on:
         options: 
           - 3
           - 4
-      environment:
+      env:
         type: choice
         default: staging
         description: Select environment to deploy
@@ -41,13 +41,13 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.env }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-        working-directory: deployments/fulldeploy/${{ github.event.inputs.environment }}
+        working-directory: deployments/fulldeploy/${{ github.event.inputs.env }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -56,14 +56,14 @@ jobs:
     
     # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
-      if: github.event.inputs.environment == 'staging'
+      if: github.event.inputs.env == 'staging'
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
      # This step is run when the tag is release-XXX
     - name: Sets env vars for production
-      if: github.event.inputs.environment == 'production'
+      if: github.event.inputs.env == 'production'
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
@@ -93,9 +93,9 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="environment=${{ github.event.inputs.environment }}" -input=true
+      run: terraform plan -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.environment }}" -input=true
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      run: terraform apply -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="environment=${{ github.event.inputs.environment }}" -auto-approve -input=true
+      run: terraform apply -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -auto-approve -input=true

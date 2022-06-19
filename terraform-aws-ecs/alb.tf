@@ -1,5 +1,5 @@
 resource "aws_lb" "gck_portal" {
-  name               = "${var.app_name}-alb-${var.environment}"
+  name               = "${var.app_name}-alb-${var.env}"
   internal           = false
   load_balancer_type = "application"
   security_groups = [
