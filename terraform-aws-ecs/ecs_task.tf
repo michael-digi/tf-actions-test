@@ -13,6 +13,7 @@ resource "aws_ecs_task_definition" "gck_portal" {
     portMappings = [{
       protocol      = "tcp"
       containerPort = 80
+      hostPort      = 80
     }]
   }])
 }
