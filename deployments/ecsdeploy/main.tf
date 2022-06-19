@@ -24,19 +24,19 @@ provider "aws" {
 
 data "aws_vpc" "primary_vpc" {
   filter {
-    name   = "Name"
+    name   = "tag:Name"
     values = ["Primary_${var.env}"]
   }
 }
 
 data "aws_subnets" "private" {
   filter {
-    name   = "Tier"
+    name   = "tag:Tier"
     values = ["Private Subnets"]
   }
 
   filter {
-    name   = "Vpc"
+    name   = "tag:Vpc"
     values = ["Primary_${var.env}"]
   }
 }
@@ -48,12 +48,12 @@ data "aws_subnet" "private" {
 
 data "aws_subnets" "public" {
   filter {
-    name   = "tags:Tier"
+    name   = "tag:Tier"
     values = ["Public Subnets"]
   }
 
   filter {
-    name   = "tags:Vpc"
+    name   = "tag:Vpc"
     values = ["Primary_${var.env}"]
   }
 }
