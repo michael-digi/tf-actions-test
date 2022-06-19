@@ -48,12 +48,12 @@ data "aws_subnet" "private" {
 
 data "aws_subnets" "public" {
   filter {
-    name   = "Tier"
+    name   = "tags:Tier"
     values = ["Public Subnets"]
   }
 
   filter {
-    name   = "Vpc"
+    name   = "tags:Vpc"
     values = ["Primary_${var.env}"]
   }
 }
