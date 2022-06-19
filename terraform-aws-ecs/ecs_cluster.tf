@@ -1,3 +1,3 @@
 resource "aws_ecs_cluster" "gck_portal" {
-  name = "gck-portal-cluster-${var.environment}"
+  name = "${var.app_name}-cluster-${var.env}"
 }

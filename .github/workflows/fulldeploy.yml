@@ -21,7 +21,7 @@ on:
           - 4
       environment:
         type: choice
-        default: Dev
+        default: staging
         description: Select environment to deploy
         options: 
           - production

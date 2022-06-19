@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_task_role" {
-  name = "gck-portal-ecsTaskRole"
+  name = "${var.app_name}-ecsTaskRole"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +20,7 @@ EOF
 
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "gck-portal-ecsTaskExecutionRole"
+  name = "${var.app_name}-ecsTaskExecutionRole"
 
   assume_role_policy = <<EOF
 {

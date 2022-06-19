@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "gck_portal" {
-  name                               = "gck-portal-service-${var.environment}"
+  name                               = "${var.app_name}-service-${var.env}"
   cluster                            = aws_ecs_cluster.gck_portal.id
   task_definition                    = aws_ecs_task_definition.gck_portal.arn
   desired_count                      = 2
@@ -8,6 +8,11 @@ resource "aws_ecs_service" "gck_portal" {
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
 
+  ordered_placement_strategy {
+    type  = "spread"
+    field = "host"
+  }
+
   network_configuration {
     subnets          = var.private_subnets
     assign_public_ip = false
@@ -15,7 +20,7 @@ resource "aws_ecs_service" "gck_portal" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.gck_portal.arn
-    container_name   = "gck-portal-container-${var.environment}"
+    container_name   = "${var.app_name}-container-${var.env}"
     container_port   = 80
   }
 

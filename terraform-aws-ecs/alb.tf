@@ -1,5 +1,5 @@
 resource "aws_lb" "gck_portal" {
-  name               = "gck-portal-alb-${var.environment}"
+  name               = "${var.app_name}-alb-${var.environment}"
   internal           = false
   load_balancer_type = "application"
   security_groups = [
@@ -11,7 +11,7 @@ resource "aws_lb" "gck_portal" {
 }
 
 resource "aws_alb_target_group" "gck_portal" {
-  name        = "gck-portal-tg-prod"
+  name        = "${var.app_name}-tg-${var.env}"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id

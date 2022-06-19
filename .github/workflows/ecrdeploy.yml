@@ -14,11 +14,11 @@ on:
           - us-west-2
       environment:
         type: choice
-        default: 4
+        default: staging
         description: Select environment to deploy
         options: 
-          - Production
-          - Staging
+          - production
+          - staging
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'

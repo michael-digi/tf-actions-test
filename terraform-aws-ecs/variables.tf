@@ -1,21 +1,10 @@
 variable "vpc_cidr" { default = "172.16.0.0/16" }
-variable "vpc_subnet_bits" { default = 4 }
-variable "vpc_zone_bits" { default = 2 }
-variable "vpc_subnet_indices" {
-  type = map(string)
-  default = {
-    "public"  = 0
-    "private" = 1
-  }
-}
 
+variable ecr_repo_main_region { default = "us-west-2"}
 
+variable ecr_repo_main_account { default = "946265355097"}
 
-variable "availability_zone_postfix" {
-  description = "Region postfix"
-  type        = list(any)
-  default     = ["a", "b", "c", "d"]
-}
+var version { default = "latest" }
 
 variable "region" {
   description = "Region to deploy to"
@@ -29,14 +18,20 @@ variable "subnets" {
   default     = 3
 }
 
-variable "environment" {
+variable "env" {
   description = "Environment deploying to"
   type        = string
   default     = "dev"
 }
 
 variable "private_subnets" {
-  description = "List of private "
+  description = "List of private subnets"
+  type        = list
+  default     = []
+}
+
+variable "private_subnets" {
+  description = "List of public subnets"
   type        = list
   default     = []
 }
