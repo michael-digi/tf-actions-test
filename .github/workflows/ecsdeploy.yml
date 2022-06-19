@@ -1,6 +1,10 @@
 name: 'ECS Deploy'
 
 on: 
+  on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       region:
@@ -26,9 +30,6 @@ on:
       AWS_SECRET_ACCESS_KEY:
         description: 'AWS secret'
         required: true
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 permissions:
   contents: read
@@ -89,7 +90,7 @@ jobs:
 
     # # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.ecs -replace=module.ecs.aws_ecs_service.gck_portal -var="region=${{ github.event.inputs.region }}" -var="env=${{ github.event.inputs.env }}" -input=true
+      run: terraform plan -target=module.ecs -var="region=${{ github.event.inputs.region }}" -var="env=${{ github.event.inputs.env }}" -input=true
 
     #   # On push to main, build or change infrastructure according to Terraform configuration files
     #   # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
