@@ -63,12 +63,14 @@ data "aws_subnet" "public" {
   id       = each.value
 }
 
-variable "public_subnet_cidr_blocks" {
-  value = [for s in data.aws_subnet.public : s.cidr_block]
-}
+locals {
+  public_subnet_cidr_blocks = {
+    value = [for s in data.aws_subnet.public : s.cidr_block]
+  }
 
-variable "private_subnet_cidr_blocks" {
-  value = [for s in data.aws_subnet.private : s.cidr_block]
+  private_subnet_cidr_blocks = {
+    value = [for s in data.aws_subnet.private : s.cidr_block]
+  }
 }
 
 module "ecs" {
