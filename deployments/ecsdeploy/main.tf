@@ -74,7 +74,7 @@ locals {
 }
 
 output "hey" {
-  value = aws_vpc.primary_vpc
+  value = data.aws_vpc.primary_vpc
 }
 
 # module "ecs" {
