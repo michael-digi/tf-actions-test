@@ -1,10 +1,10 @@
 variable "vpc_cidr" { default = "172.16.0.0/16" }
 
-variable ecr_repo_main_region { default = "us-west-2"}
+variable ecr_repo_main_region { default = "us-east-1"}
 
-variable ecr_repo_main_account { default = "946265355097"}
+variable ecr_repo_main_account { default = "417363389520"}
 
-var version { default = "latest" }
+variable version { default = "latest" }
 
 variable "region" {
   description = "Region to deploy to"
@@ -30,7 +30,7 @@ variable "private_subnets" {
   default     = []
 }
 
-variable "private_subnets" {
+variable "public_subnets" {
   description = "List of public subnets"
   type        = list
   default     = []
