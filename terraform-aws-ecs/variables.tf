@@ -41,3 +41,9 @@ variable "vpc_id" {
   type        = string
   default     = ""
 }
+
+variable "app_name" {
+  description = "Name of GoCheck portal app"
+  type        = string
+  default     = "gck-portal"
+}
