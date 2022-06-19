@@ -8,11 +8,6 @@ resource "aws_ecs_service" "gck_portal" {
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
 
-  ordered_placement_strategy {
-    type  = "spread"
-    field = "host"
-  }
-
   network_configuration {
     subnets          = var.private_subnets
     assign_public_ip = false
