@@ -72,7 +72,7 @@ var "public_subnet_cidr_blocks" {
 }
 
 module "ecs" {
-  source = "../../../terraform-aws-ecs"
+  source = "../../terraform-aws-ecs"
 
   private_subnets = var.private_subnet_cidr_blocks
   public_subnets  = var.public_subnet_cidr_blocks
