@@ -73,10 +73,6 @@ locals {
   }
 }
 
-output "hey" {
-  value = data.aws_vpc.vpc.id
-}
-
 module "ecs" {
   source = "../../terraform-aws-ecs"
 

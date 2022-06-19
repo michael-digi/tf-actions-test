@@ -31,7 +31,7 @@ variable "enable_dns_support" {
 }
 
 variable "env" {
-  description = "Which environment deploying into."
+  description = "Which environment we're deploying into"
   type        = string
   default     = "dev"
 }
