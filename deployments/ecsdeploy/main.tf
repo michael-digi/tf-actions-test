@@ -22,20 +22,12 @@ provider "aws" {
   region = var.region
 }
 
-variable "vpc_id" {}
-
-data "aws_vpc" "selected" {
-  id = var.vpc_id
+data "aws_vpc" "primary_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["Primary_${var.env}"]
+  }
 }
-
-# data "aws_vpc" "primary_vpc" {
-#   filter {
-#     name   = "tag:Name"
-#     values = ["Primary_${var.env}"]
-#   }
-
-#   id = var.vpc_id
-# }
 
 data "aws_subnets" "private" {
   filter {
@@ -81,11 +73,15 @@ locals {
   }
 }
 
-module "ecs" {
-  source = "../../terraform-aws-ecs"
-
-  private_subnets = local.private_subnet_cidr_blocks.value
-  public_subnets  = local.public_subnet_cidr_blocks.value
-
-  vpc_id = data.aws_vpc.selected.id
+output "hey" {
+    value = aws_vpc.primary_vpc
 }
+
+# module "ecs" {
+#   source = "../../terraform-aws-ecs"
+
+#   private_subnets = local.private_subnet_cidr_blocks.value
+#   public_subnets  = local.public_subnet_cidr_blocks.value
+
+#   vpc_id = data.aws_vpc.selected.id
+# }
