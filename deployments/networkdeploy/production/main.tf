@@ -47,7 +47,7 @@ locals {
   ])
 }
 
-module "networking" {
+module "networking_production" {
   source   = "../../../terraform-aws-networking"
   vpc_name = "New"
 
