@@ -22,7 +22,7 @@ on:
       containers:
         type: choice
         default: 2
-        description: Select the number of containers to deploy
+        description: Select number of containers
         options: 
           - 0
           - 1
