@@ -21,8 +21,8 @@ on:
           - staging
       containers:
         type: choice
-        default: staging
-        description: Select environment to deploy
+        default: 2
+        description: Select the number of containers to deploy
         options: 
           - 0
           - 1
