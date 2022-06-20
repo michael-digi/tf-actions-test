@@ -12,13 +12,13 @@ on:
           - us-east-2
           - us-west-1
           - us-west-2
-      env:
-        type: choice
-        default: staging
-        description: Select environment to deploy
-        options: 
-          - production
-          - staging
+      # env:
+      #   type: choice
+      #   default: staging
+      #   description: Select environment to deploy
+      #   options: 
+      #     - production
+      #     - staging
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'
