@@ -143,3 +143,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Apply
+      run: terraform apply -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true
