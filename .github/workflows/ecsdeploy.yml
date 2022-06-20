@@ -93,7 +93,7 @@ jobs:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.env }}
-    needs: terraform-manual-plan
+    needs: terraform-plan
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
