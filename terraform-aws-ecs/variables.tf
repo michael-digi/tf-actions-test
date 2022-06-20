@@ -47,3 +47,9 @@ variable "app_name" {
   type        = string
   default     = "gck-portal"
 }
+
+variable "num_containers" {
+  description = "The number of Fargate containers to spin up in the ECS cluster"
+  type        = number
+  default     = 2
+}
