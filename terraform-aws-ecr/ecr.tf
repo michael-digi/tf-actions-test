@@ -5,6 +5,10 @@ terraform {
 resource "aws_ecr_repository" "repos" {
   for_each = var.repository_list
   name     = each.value
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "lifecycle_policy" {
