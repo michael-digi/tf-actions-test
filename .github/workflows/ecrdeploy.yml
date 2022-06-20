@@ -103,5 +103,5 @@ jobs:
       run: terraform plan -target=module.ecr_repo -var="region=${{ github.event.inputs.region }}" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
-    - name: Terraform apply
+    - name: Terraform Apply
       run: terraform apply -target=module.ecr_repo -input=true .terraform/terraform.tfplan
