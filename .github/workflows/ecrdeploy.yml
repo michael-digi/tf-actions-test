@@ -65,7 +65,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -var="region=${{ github.event.inputs.region }}" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -target=module.ecr -var="region=${{ github.event.inputs.region }}" -input=true -out=.terraform/terraform.tfplan
   
   terraform-apply:
     name: 'Terraform Apply'
