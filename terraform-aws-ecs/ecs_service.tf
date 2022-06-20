@@ -2,7 +2,7 @@ resource "aws_ecs_service" "gck_portal" {
   name                               = "${var.app_name}-service-${var.env}"
   cluster                            = aws_ecs_cluster.gck_portal.id
   task_definition                    = aws_ecs_task_definition.gck_portal.arn
-  desired_count                      = var.num_containers
+  desired_count                      = 10
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
   launch_type                        = "FARGATE"
