@@ -89,7 +89,7 @@ jobs:
   terraform-apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.env }}
+    environment: production
     needs: terraform-plan
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -135,6 +135,6 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -target=module.ecs -var="region=${{ github.event.inputs.region }}" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
     
-    # # Generates an execution plan for Terraform
+    # Generates an execution plan for Terraform
     - name: Terraform apply
       run: terraform apply -target=module.ecs -input=true .terraform/terraform.tfplan
