@@ -2,7 +2,7 @@ resource "aws_ecs_service" "gck_portal" {
   name                               = "${var.app_name}-service-${var.env}"
   cluster                            = aws_ecs_cluster.gck_portal.id
   task_definition                    = aws_ecs_task_definition.gck_portal.arn
-  desired_count                      = 10
+  desired_count                      = var.num_containers
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
   launch_type                        = "FARGATE"
@@ -20,6 +20,6 @@ resource "aws_ecs_service" "gck_portal" {
   }
 
   lifecycle {
-    ignore_changes = [task_definition, desired_count]
+    ignore_changes = [task_definition]
   }
 }
