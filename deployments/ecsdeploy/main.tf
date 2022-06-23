@@ -80,6 +80,7 @@ module "ecs" {
   public_subnets  = local.public_subnet_cidr_blocks.value
 
   num_containers = var.num_containers
+  region = var.region
 
   vpc_id = data.aws_vpc.vpc.id
 }
