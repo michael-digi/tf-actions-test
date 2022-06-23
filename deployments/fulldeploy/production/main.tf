@@ -64,6 +64,7 @@ module "ecs" {
 
   num_containers = var.num_containers
   region = var.region
+  env = var.env
 
   vpc_id = module.networking.vpc_id
 }
