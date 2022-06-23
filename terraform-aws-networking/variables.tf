@@ -35,3 +35,9 @@ variable "env" {
   type        = string
   default     = "dev"
 }
+
+variable "region" {
+  description = "Which region we're deploying into"
+  type        = string
+  default     = "us-west-2"
+}
