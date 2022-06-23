@@ -101,5 +101,7 @@ module "ecs_dev" {
   private_subnets = module.networking_dev.private_subnets
   public_subnets = module.networking_staging.public_subnets
 
+  num_containers = var.num_containers
+
   vpc_id = module.networking_dev.vpc_id
 }
