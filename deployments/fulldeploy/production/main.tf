@@ -50,6 +50,7 @@ locals {
 module "networking" {
   source = "../../../terraform-aws-networking"
   env    = var.env
+  region = var.region
 
   public_private_subnet_pairs = local.subnet_pairs
   vpc_primary_cidr            = var.vpc_cidr // will be determined by dev/staging/prod vars
@@ -62,6 +63,7 @@ module "ecs" {
   public_subnets  = module.networking.public_subnets
 
   num_containers = var.num_containers
+  region = var.region
 
   vpc_id = module.networking.vpc_id
 }
