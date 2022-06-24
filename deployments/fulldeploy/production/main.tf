@@ -10,6 +10,7 @@ terraform {
   backend "remote" {
     # The name of your Terraform Cloud organization.
     organization = "michael-digi" // temporary, testing
+  }
 }
 
 provider "aws" {
