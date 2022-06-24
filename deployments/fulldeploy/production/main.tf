@@ -13,7 +13,7 @@ terraform {
 
     # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
-      name = "tf-actions-test-2-other" // temporary, testing
+      name = "gocheck_${var.env}_${var.region}" // temporary, testing
     }
   }
 }
