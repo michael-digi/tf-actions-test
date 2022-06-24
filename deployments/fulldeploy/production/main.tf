@@ -13,7 +13,7 @@ terraform {
 
     # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
-      name = "dev" // temporary, testing
+      name = "production" // temporary, testing
     }
   }
 }
