@@ -105,13 +105,10 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-    
-    - name: Terraform check
-      run: terraform workspace list
 
-  #   # Generates an execution plan for Terraform
-  #   - name: Terraform Plan
-  #     run: terraform plan -var="num_containers=${{ github.event.inputs.containers }}" -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan -var="num_containers=${{ github.event.inputs.containers }}" -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
 
 
   # terraform-apply:
