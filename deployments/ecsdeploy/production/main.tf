@@ -81,6 +81,7 @@ module "ecs" {
 
   num_containers = var.num_containers
   region = var.region
+  env = var.env
 
   vpc_id = data.aws_vpc.vpc.id
 }
