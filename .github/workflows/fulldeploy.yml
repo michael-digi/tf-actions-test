@@ -111,6 +111,8 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -var="num_containers=${{ github.event.inputs.containers }}" -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
+      env:
+        TF_WORKSPACE: ${{ github.event.inputs.region }}
 
 
   terraform-apply:
