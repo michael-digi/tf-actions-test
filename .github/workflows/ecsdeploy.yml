@@ -101,6 +101,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     needs: terraform-plan
+    env:
+        TF_WORKSPACE: ${{ github.event.inputs.region }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
