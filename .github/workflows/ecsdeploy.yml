@@ -108,7 +108,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecsdeploy
+        working-directory: deployments/ecsdeploy/${{ github.event.inputs.env }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
