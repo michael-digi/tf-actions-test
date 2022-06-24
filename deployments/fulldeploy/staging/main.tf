@@ -13,7 +13,7 @@ terraform {
 
     # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
-      name = "staging"
+      name = "staging" // temporary, testing
     }
   }
 }
@@ -79,14 +79,6 @@ module "networking_staging" {
   vpc_primary_cidr            = var.vpc_cidr_staging
 }
 
-module "networking_dev" {
-  source = "../../../terraform-aws-networking"
-  env    = var.env
-  region = var.region
-
-  public_private_subnet_pairs = local.subnet_pairs_dev
-  vpc_primary_cidr            = var.vpc_cidr_dev
-}
 
 module "ecs_staging" {
   source = "../../../terraform-aws-ecs"
@@ -99,17 +91,4 @@ module "ecs_staging" {
   env = var.env
 
   vpc_id = module.networking_staging.vpc_id
-}
-
-module "ecs_dev" {
-  source = "../../../terraform-aws-ecs"
-
-  private_subnets = module.networking_dev.private_subnets
-  public_subnets  = module.networking_dev.public_subnets
-
-  num_containers = var.num_containers
-  region = var.region
-  env = var.env
-
-  vpc_id = module.networking_dev.vpc_id
 }
