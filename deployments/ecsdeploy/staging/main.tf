@@ -9,11 +9,11 @@ terraform {
 terraform {
   backend "remote" {
     # The name of your Terraform Cloud organization.
-    organization = "michael-digi" // temp, testing
+    organization = "michael-digi"
 
     # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
-      name = "staging-" // temp, testing
+      name = "staging-"
     }
   }
 }
