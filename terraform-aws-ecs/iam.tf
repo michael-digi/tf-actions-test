@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_task_role" {
-  name = "${var.app_name}-ecsTaskRole_${var.env}"
+  name = "${var.app_name}-ecsTaskRole_${var.env}_${var.region}"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +20,7 @@ EOF
 
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "${var.app_name}-ecsTaskExecutionRole_${var.env}"
+  name = "${var.app_name}-ecsTaskExecutionRole_${var.env}_${var.region}"
 
   assume_role_policy = <<EOF
 {
