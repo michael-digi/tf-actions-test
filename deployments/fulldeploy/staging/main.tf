@@ -13,7 +13,7 @@ terraform {
 
     # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
-      name = "tf-actions-test-2" // temporary, testing
+      name = "gocheck_${var.env}_${var.region}" // temporary, testing
     }
   }
 }
@@ -71,37 +71,45 @@ locals {
 }
 
 module "networking_staging" {
-  source   = "../../../terraform-aws-networking"
-  vpc_name = "New_staging"
+  source = "../../../terraform-aws-networking"
+  env    = var.env
+  region = var.region
 
   public_private_subnet_pairs = local.subnet_pairs_staging
   vpc_primary_cidr            = var.vpc_cidr_staging
 }
 
 module "networking_dev" {
-  source   = "../../../terraform-aws-networking"
-  vpc_name = "New_dev"
+  source = "../../../terraform-aws-networking"
+  env    = var.env
+  region = var.region
 
   public_private_subnet_pairs = local.subnet_pairs_dev
   vpc_primary_cidr            = var.vpc_cidr_dev
 }
 
 module "ecs_staging" {
-  source          = "../../../terraform-aws-ecs"
-  
+  source = "../../../terraform-aws-ecs"
+
   private_subnets = module.networking_staging.private_subnets
-  public_subnets = module.networking_staging.public_subnets
+  public_subnets  = module.networking_staging.public_subnets
+
+  num_containers = var.num_containers
+  region = var.region
+  env = var.env
 
   vpc_id = module.networking_staging.vpc_id
 }
 
 module "ecs_dev" {
-  source          = "../../../terraform-aws-ecs"
-  
+  source = "../../../terraform-aws-ecs"
+
   private_subnets = module.networking_dev.private_subnets
-  public_subnets = module.networking_staging.public_subnets
+  public_subnets  = module.networking_dev.public_subnets
 
   num_containers = var.num_containers
+  region = var.region
+  env = var.env
 
   vpc_id = module.networking_dev.vpc_id
 }
