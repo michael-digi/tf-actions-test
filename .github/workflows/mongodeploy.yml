@@ -3,15 +3,6 @@ name: 'Mongo Deploy'
 on: 
   workflow_dispatch:
     inputs:
-      region:
-        type: choice
-        description: Select region
-        default: us-east-1
-        options: 
-          - us-east-1
-          - us-east-2
-          - us-west-1
-          - us-west-2
       env:
         type: choice
         default: staging

@@ -3,22 +3,6 @@ name: 'Network Deploy'
 on: 
   workflow_dispatch:
     inputs:
-      region:
-        type: choice
-        description: Select region
-        default: us-east-1
-        options: 
-          - us-east-1
-          - us-east-2
-          - us-west-1
-          - us-west-2
-      subnets:
-        type: choice
-        default: 4
-        description: Select number of subnets
-        options: 
-          - 3
-          - 4
       env:
         type: choice
         default: staging
