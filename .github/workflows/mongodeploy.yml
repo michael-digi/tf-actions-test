@@ -86,7 +86,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/networkdeploy/${{ github.event.inputs.env }}
+        working-directory: deployments/mongodeploy/${{ github.event.inputs.env }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
