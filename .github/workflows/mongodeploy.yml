@@ -83,55 +83,55 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -target=module.mongo -var="region=${{ github.event.inputs.region }}" -var="env=${{ github.event.inputs.env }}" -input=true
 
-  # terraform-apply:
-  #   name: 'Terraform Apply'
-  #   runs-on: ubuntu-latest
-  #   environment: ${{ github.event.inputs.env }}
-  #   needs: terraform-plan
+  terraform-apply:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.env }}
+    needs: terraform-plan
 
-  #   # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: deployments/networkdeploy/${{ github.event.inputs.env }}
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: deployments/networkdeploy/${{ github.event.inputs.env }}
 
-  #   steps:
-  #   # Checkout the repository to the GitHub Actions runner
-  #   - name: Checkout
-  #     uses: actions/checkout@v3
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
 
-  #   # This step is run when the tag is release-XXX
-  #   - name: Sets env vars for staging
-  #     if: github.event.inputs.env == 'staging'
-  #     run: |
-  #       echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-  #       echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+    # This step is run when the tag is release-XXX
+    - name: Sets env vars for staging
+      if: github.event.inputs.env == 'staging'
+      run: |
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
-  #   # This step is run when the tag is release-XXX
-  #   - name: Sets env vars for production
-  #     if: github.event.inputs.env == 'production'
-  #     run: |
-  #       echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-  #       echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+    # This step is run when the tag is release-XXX
+    - name: Sets env vars for production
+      if: github.event.inputs.env == 'production'
+      run: |
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
 
-  #   # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-  #   - name: Setup Terraform
-  #     uses: hashicorp/setup-terraform@v1
-  #     with:
-  #       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
-  #   # Checks that all Terraform configuration files adhere to a canonical format
-  #   - name: Terraform Format
-  #     run: terraform fmt
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt
 
-  #   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-  #   - name: Terraform Init
-  #     run: terraform init
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
 
-  #   # Generates an execution plan for Terraform
-  #   - name: Terraform Plan
-  #     run: terraform plan -target=module.networking_${{ github.event.inputs.env }} -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan -target=module.mongo -var="region=${{ github.event.inputs.region }}" -var="subnets=${{ github.event.inputs.subnets }}" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
     
-  #   # Generates an execution plan for Terraform
-  #   - name: Terraform Apply
-  #     run: terraform apply -target=module.networking_${{ github.event.inputs.env }} -input=true .terraform/terraform.tfplan
+    # Generates an execution plan for Terraform
+    - name: Terraform Apply
+      run: terraform apply -target=module.mongo -input=true .terraform/terraform.tfplan
