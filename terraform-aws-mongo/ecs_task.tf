@@ -17,5 +17,13 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       containerPort = 27017
       hostPort      = 27017
     }]
+    logConfiguration: {
+          logDriver: "awslogs",
+          options: {
+            awslogs-group: "mongo",
+            awslogs-region: "us-east-1",
+            awslogs-stream-prefix: "ecs"
+          }
+        }
   }])
 }
