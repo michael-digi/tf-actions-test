@@ -13,10 +13,6 @@ resource "aws_ecs_service" "gck_mongo1" {
     assign_public_ip = false
   }
 
-  load_balancer {
-    target_group_arn = aws_alb_target_group.gck_mongo.arn
-  }
-
   lifecycle {
     ignore_changes = [task_definition]
   }
