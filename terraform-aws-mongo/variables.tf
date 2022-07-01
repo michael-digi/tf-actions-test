@@ -9,3 +9,6 @@ variable "region" {
 variable "env" {
     default = "production"
 }
+
+variable "subnets" {}
+variable "vpc_id" {}
