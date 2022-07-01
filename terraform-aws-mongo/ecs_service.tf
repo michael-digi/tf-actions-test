@@ -12,8 +12,4 @@ resource "aws_ecs_service" "gck_mongo1" {
     subnets          = var.private_subnets
     assign_public_ip = false
   }
-
-  lifecycle {
-    ignore_changes = [task_definition]
-  }
 }
