@@ -17,6 +17,10 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       containerPort = 27017
       hostPort      = 27017
     }]
+    "environment": [
+        {"name": "DOMAIN", "value": "miked.mongo1.com."},
+        {"name": "DATA_DIR", "value": "mongo1"}
+    ],
     logConfiguration: {
           logDriver: "awslogs",
           options: {
