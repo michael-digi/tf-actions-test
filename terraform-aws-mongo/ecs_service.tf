@@ -9,6 +9,7 @@ resource "aws_ecs_service" "gck_mongo1" {
   scheduling_strategy                = "REPLICA"
 
   network_configuration {
+    security_groups = ["sg-03563a0c02eb3fda2", "sg-0543b24b4f1ea21d5", "sg-09b53988adc5012f9"]
     subnets          = var.private_subnets
     assign_public_ip = false
   }
@@ -25,6 +26,7 @@ resource "aws_ecs_service" "gck_mongo2" {
   scheduling_strategy                = "REPLICA"
 
   network_configuration {
+    security_groups = ["sg-03563a0c02eb3fda2", "sg-0543b24b4f1ea21d5", "sg-09b53988adc5012f9"]
     subnets          = var.private_subnets
     assign_public_ip = false
   }
@@ -41,6 +43,7 @@ resource "aws_ecs_service" "gck_mongo3" {
   scheduling_strategy                = "REPLICA"
 
   network_configuration {
+    security_groups = ["sg-03563a0c02eb3fda2", "sg-0543b24b4f1ea21d5", "sg-09b53988adc5012f9"]
     subnets          = var.private_subnets
     assign_public_ip = false
   }
