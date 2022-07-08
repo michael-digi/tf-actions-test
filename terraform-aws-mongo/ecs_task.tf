@@ -18,7 +18,8 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       hostPort      = 27017
     }]
     "environment": [
-        {"name": "DOMAIN", "value": "miked.mongo1.com."},
+        {"name": "DOMAIN", "value": "miked.com."},
+        {"name": "SUB_DOMAIN", "value": "mongo1.miked.com."},
         {"name": "DATA_DIR", "value": "mongo1"},
         {"name": "LEADER", "value": "true"}
     ],
@@ -51,7 +52,8 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       hostPort      = 27017
     }]
     "environment": [
-        {"name": "DOMAIN", "value": "miked.mongo2.com."},
+        {"name": "DOMAIN", "value": "miked.com."},
+        {"name": "SUB_DOMAIN", "value": "mongo2.miked.com."},
         {"name": "DATA_DIR", "value": "mongo2"},
         {"name": "LEADER", "value": "false"}
     ],
@@ -84,7 +86,8 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       hostPort      = 27017
     }]
     "environment": [
-        {"name": "DOMAIN", "value": "miked.mongo3.com."},
+        {"name": "DOMAIN", "value": "miked.com."},
+        {"name": "SUB_DOMAIN", "value": "mongo3.miked.com."},
         {"name": "DATA_DIR", "value": "mongo3"},
         {"name": "LEADER", "value": "false"}
     ],
