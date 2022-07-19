@@ -12,4 +12,3 @@ variable "env" {
 
 variable "private_subnets" {}
 variable "vpc_id" {}
-variable "private_subnet_ids" {}
