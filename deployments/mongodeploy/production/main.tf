@@ -55,6 +55,7 @@ locals {
 module "mongo" {
   source = "../../../terraform-aws-mongo"
   private_subnets = local.private_subnet_cidr_blocks.value
+  subnets = var.subnets
   region = var.region
   vpc_id = data.aws_vpc.vpc.id
 }

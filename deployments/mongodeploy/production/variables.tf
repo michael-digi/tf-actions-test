@@ -9,3 +9,9 @@ variable "env" {
   type        = string
   default     = "dev"
 }
+
+variable "subnets" {
+  description = "Number of subnets"
+  type        = number
+  default     = 3
+}
