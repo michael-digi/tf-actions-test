@@ -3,11 +3,11 @@ variable "mongo_image" {
 }
 
 variable "region" {
-    default = "us-east-1"
+  default = "us-east-1"
 }
 
 variable "env" {
-    default = "production"
+  default = "production"
 }
 
 variable "private_subnets" {}

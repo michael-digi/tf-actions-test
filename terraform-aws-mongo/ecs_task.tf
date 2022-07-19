@@ -17,20 +17,20 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       containerPort = 27017
       hostPort      = 27017
     }]
-    "environment": [
-        {"name": "DOMAIN", "value": "miked.com."},
-        {"name": "SUB_DOMAIN", "value": "mongo1.miked.com."},
-        {"name": "DATA_DIR", "value": "mongo1"},
-        {"name": "LEADER", "value": "true"}
+    "environment" : [
+      { "name" : "DOMAIN", "value" : "miked.com." },
+      { "name" : "SUB_DOMAIN", "value" : "mongo1.miked.com." },
+      { "name" : "DATA_DIR", "value" : "mongo1" },
+      { "name" : "LEADER", "value" : "true" }
     ],
-    logConfiguration: {
-          logDriver: "awslogs",
-          options: {
-            awslogs-group: "mongo",
-            awslogs-region: "us-east-1",
-            awslogs-stream-prefix: "ecs"
-          }
-        }
+    logConfiguration : {
+      logDriver : "awslogs",
+      options : {
+        awslogs-group : "mongo",
+        awslogs-region : "us-east-1",
+        awslogs-stream-prefix : "ecs"
+      }
+    }
   }])
 }
 
@@ -51,20 +51,20 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       containerPort = 27017
       hostPort      = 27017
     }]
-    "environment": [
-        {"name": "DOMAIN", "value": "miked.com."},
-        {"name": "SUB_DOMAIN", "value": "mongo2.miked.com."},
-        {"name": "DATA_DIR", "value": "mongo2"},
-        {"name": "LEADER", "value": "false"}
+    "environment" : [
+      { "name" : "DOMAIN", "value" : "miked.com." },
+      { "name" : "SUB_DOMAIN", "value" : "mongo2.miked.com." },
+      { "name" : "DATA_DIR", "value" : "mongo2" },
+      { "name" : "LEADER", "value" : "false" }
     ],
-    logConfiguration: {
-          logDriver: "awslogs",
-          options: {
-            awslogs-group: "mongo",
-            awslogs-region: "us-east-1",
-            awslogs-stream-prefix: "ecs"
-          }
-        }
+    logConfiguration : {
+      logDriver : "awslogs",
+      options : {
+        awslogs-group : "mongo",
+        awslogs-region : "us-east-1",
+        awslogs-stream-prefix : "ecs"
+      }
+    }
   }])
 }
 
@@ -85,19 +85,19 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       containerPort = 27017
       hostPort      = 27017
     }]
-    "environment": [
-        {"name": "DOMAIN", "value": "miked.com."},
-        {"name": "SUB_DOMAIN", "value": "mongo3.miked.com."},
-        {"name": "DATA_DIR", "value": "mongo3"},
-        {"name": "LEADER", "value": "false"}
+    "environment" : [
+      { "name" : "DOMAIN", "value" : "miked.com." },
+      { "name" : "SUB_DOMAIN", "value" : "mongo3.miked.com." },
+      { "name" : "DATA_DIR", "value" : "mongo3" },
+      { "name" : "LEADER", "value" : "false" }
     ],
-    logConfiguration: {
-          logDriver: "awslogs",
-          options: {
-            awslogs-group: "mongo",
-            awslogs-region: "us-east-1",
-            awslogs-stream-prefix: "ecs"
-          }
-        }
+    logConfiguration : {
+      logDriver : "awslogs",
+      options : {
+        awslogs-group : "mongo",
+        awslogs-region : "us-east-1",
+        awslogs-stream-prefix : "ecs"
+      }
+    }
   }])
 }
