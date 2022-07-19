@@ -47,14 +47,14 @@ data "aws_subnet" "private" {
 }
 
 locals {
-  private_subnet_cidr_blocks = {
+  private_subnet_ids = {
     value = [for s in data.aws_subnet.private : s.id]
   }
 }
 
 module "mongo" {
   source = "../../../terraform-aws-mongo"
-  private_subnets = local.private_subnet_cidr_blocks.value
+  private_subnets = local.private_subnet_ids.value
   private_subnet_ids = data.aws_subnets.private
   subnets = var.subnets
   region = var.region
