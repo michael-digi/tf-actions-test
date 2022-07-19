@@ -1,5 +1,5 @@
 resource "aws_efs_file_system" "mongo_replica" {
-  creation_token = "backups"
+  creation_token = "mongo_replica"
   encrypted      = true
 }
 
