@@ -15,5 +15,3 @@ variable "subnets" {
   type        = number
   default     = 3
 }
-
-variable "private_subnet_ids" {}
