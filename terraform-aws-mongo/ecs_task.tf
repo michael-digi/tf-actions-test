@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
-    name = "mongo_replica"
+    name = "mongo_replica_1"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
@@ -24,8 +24,8 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       hostPort      = 27017
     }]
     mountPoints = [{
-      containerPath : "/data/mongo1"
-      sourceVolume : "mongo_replica"
+      containerPath : "/data"
+      sourceVolume : "mongo_replica_1"
     }]
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
@@ -53,7 +53,7 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
-    name = "mongo_replica"
+    name = "mongo_replica_2"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
@@ -68,8 +68,8 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       hostPort      = 27017
     }]
     mountPoints = [{
-      containerPath : "/data/mongo2"
-      sourceVolume : "mongo_replica"
+      containerPath : "/data"
+      sourceVolume : "mongo_replica_2"
     }]
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
@@ -97,7 +97,7 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
-    name = "mongo_replica"
+    name = "mongo_replica_3"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
@@ -112,8 +112,8 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       hostPort      = 27017
     }]
     mountPoints = [{
-      containerPath : "/data/mongo3"
-      sourceVolume : "mongo_replica"
+      containerPath : "/data"
+      sourceVolume : "mongo_replica_3"
     }]
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
