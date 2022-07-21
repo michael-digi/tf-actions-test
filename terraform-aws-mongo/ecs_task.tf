@@ -8,6 +8,12 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
   memory                   = 512
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
+  volume {
+    name = "mongo_replica"
+    efs_volume_configuration = {
+      file_system_id = aws_efs_file_system.mongo_replica.id
+    }
+  }
   container_definitions = jsonencode([{
     name      = "monogo1-container-${var.env}"
     image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongocluster:latest"
@@ -21,12 +27,6 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       containerPath : "/data/mongo1"
       sourceVolume : "mongo_replica"
     }]
-    volume = {
-      name = "mongo_replica"
-      efs_volume_configuration = {
-        file_system_id = aws_efs_file_system.mongo_replica.id
-      }
-    }
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
       { "name" : "SUB_DOMAIN", "value" : "mongo1.miked.com." },
@@ -52,6 +52,12 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   memory                   = 512
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
+  volume {
+    name = "mongo_replica"
+    efs_volume_configuration = {
+      file_system_id = aws_efs_file_system.mongo_replica.id
+    }
+  }
   container_definitions = jsonencode([{
     name      = "monogo2-container-${var.env}"
     image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongocluster:latest"
@@ -65,12 +71,6 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       containerPath : "/data/mongo2"
       sourceVolume : "mongo_replica"
     }]
-    volume = {
-      name = "mongo_replica"
-      efs_volume_configuration = {
-        file_system_id = aws_efs_file_system.mongo_replica.id
-      }
-    }
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
       { "name" : "SUB_DOMAIN", "value" : "mongo2.miked.com." },
@@ -96,6 +96,12 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
   memory                   = 512
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
+  volume {
+    name = "mongo_replica"
+    efs_volume_configuration = {
+      file_system_id = aws_efs_file_system.mongo_replica.id
+    }
+  }
   container_definitions = jsonencode([{
     name      = "monogo3-container-${var.env}"
     image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongocluster:latest"
@@ -109,12 +115,6 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       containerPath : "/data/mongo3"
       sourceVolume : "mongo_replica"
     }]
-    volume = {
-      name = "mongo_replica"
-      efs_volume_configuration = {
-        file_system_id = aws_efs_file_system.mongo_replica.id
-      }
-    }
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
       { "name" : "SUB_DOMAIN", "value" : "mongo3.miked.com." },
