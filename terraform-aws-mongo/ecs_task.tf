@@ -17,13 +17,23 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       containerPort = 27017
       hostPort      = 27017
     }]
-    "environment" : [
+    mountPoints = [{
+      containerPath : "/data/mongo1"
+      sourceVolume : "mongo_replica"
+    }]
+    volume = {
+      name = "mongo_replica"
+      efs_volume_configuration = {
+        file_system_id = aws_efs_file_system.mongo_replica.id
+      }
+    }
+    "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
       { "name" : "SUB_DOMAIN", "value" : "mongo1.miked.com." },
       { "name" : "DATA_DIR", "value" : "mongo1" },
       { "name" : "LEADER", "value" : "true" }
     ],
-    logConfiguration : {
+    logConfiguration = {
       logDriver : "awslogs",
       options : {
         awslogs-group : "mongo",
@@ -51,13 +61,23 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       containerPort = 27017
       hostPort      = 27017
     }]
-    "environment" : [
+    mountPoints = [{
+      containerPath : "/data/mongo2"
+      sourceVolume : "mongo_replica"
+    }]
+    volume = {
+      name = "mongo_replica"
+      efs_volume_configuration = {
+        file_system_id = aws_efs_file_system.mongo_replica.id
+      }
+    }
+    "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
       { "name" : "SUB_DOMAIN", "value" : "mongo2.miked.com." },
       { "name" : "DATA_DIR", "value" : "mongo2" },
       { "name" : "LEADER", "value" : "false" }
     ],
-    logConfiguration : {
+    logConfiguration = {
       logDriver : "awslogs",
       options : {
         awslogs-group : "mongo",
@@ -85,13 +105,23 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       containerPort = 27017
       hostPort      = 27017
     }]
-    "environment" : [
+    mountPoints = [{
+      containerPath : "/data/mongo3"
+      sourceVolume : "mongo_replica"
+    }]
+    volume = {
+      name = "mongo_replica"
+      efs_volume_configuration = {
+        file_system_id = aws_efs_file_system.mongo_replica.id
+      }
+    }
+    "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
       { "name" : "SUB_DOMAIN", "value" : "mongo3.miked.com." },
       { "name" : "DATA_DIR", "value" : "mongo3" },
       { "name" : "LEADER", "value" : "false" }
     ],
-    logConfiguration : {
+    logConfiguration = {
       logDriver : "awslogs",
       options : {
         awslogs-group : "mongo",
