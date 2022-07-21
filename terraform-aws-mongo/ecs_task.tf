@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
     name = "mongo_replica"
-    efs_volume_configuration = {
+    efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
   }
@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
     name = "mongo_replica"
-    efs_volume_configuration = {
+    efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
   }
@@ -98,7 +98,7 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
     name = "mongo_replica"
-    efs_volume_configuration = {
+    efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
   }
