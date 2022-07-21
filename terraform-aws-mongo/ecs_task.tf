@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       hostPort      = 27017
     }]
     mountPoints = [{
-      containerPath : "/data"
+      containerPath : "/data/mongo1"
       sourceVolume : "mongo_replica"
     }]
     "environment" = [
@@ -68,7 +68,7 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       hostPort      = 27017
     }]
     mountPoints = [{
-      containerPath : "/data"
+      containerPath : "/data/mongo2"
       sourceVolume : "mongo_replica"
     }]
     "environment" = [
@@ -112,7 +112,7 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       hostPort      = 27017
     }]
     mountPoints = [{
-      containerPath : "/data"
+      containerPath : "/data/mongo3"
       sourceVolume : "mongo_replica"
     }]
     "environment" = [
