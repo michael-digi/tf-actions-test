@@ -68,7 +68,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state"
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
@@ -119,7 +119,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state"
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
