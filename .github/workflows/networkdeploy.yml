@@ -20,7 +20,11 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+  ENV: staging
+  AWS_REGION: us-east-1
+  ACCOUNT_ID: '417363389520'
+  NUM_SUBNETS: 3
+  
 permissions:
   contents: read
 
@@ -28,8 +32,6 @@ jobs:
   terraform-plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    # env:
-    #     TF_WORKSPACE: us-east-1
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -44,14 +46,14 @@ jobs:
 
     # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
-      if: github.event.inputs.env == 'staging'
+      if: ${{ env.ENV == 'staging' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
     # This step is run when the tag is release-XXX
     - name: Sets env vars for production
-      if: github.event.inputs.env == 'production'
+      if: ${{ env.ENV == 'production' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
@@ -59,8 +61,9 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-      # with:
-      #   cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    
+    - name: Check Account
+      run: aws sts get-caller-identity
     
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -68,19 +71,17 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$ACCOUNT_ID-$ENV-miked" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=$AWS_REGION" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.networking -var="region=us-east-1" -var="subnets=3" -var="env=${{ github.event.inputs.env }}" -input=true
+      run: terraform plan -target=module.networking -var="region=$AWS_REGION" -var="subnets=$NUM_SUBNETS" -var="env=$ENV" -input=true
 
   terraform-apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.env }}
+    environment: $ENV
     needs: terraform-plan
-    # env:
-    #     TF_WORKSPACE: us-east-1
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -95,14 +96,14 @@ jobs:
 
     # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
-      if: github.event.inputs.env == 'staging'
+      if: ${{ env.ENV == 'staging' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
     # This step is run when the tag is release-XXX
     - name: Sets env vars for production
-      if: github.event.inputs.env == 'production'
+      if: ${{ env.ENV == 'production' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
@@ -110,8 +111,6 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-      # with:
-      #   cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -119,11 +118,11 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$ACCOUNT_ID-$ENV-miked" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=$AWS_REGION" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.networking -var="region=us-east-1" -var="subnets=3" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -target=module.networking -var="region=$AWS_REGION" -var="subnets=$NUM_SUBNETS" -var="env=$ENV" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
