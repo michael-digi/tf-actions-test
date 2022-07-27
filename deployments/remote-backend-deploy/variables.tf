@@ -15,3 +15,5 @@ variable "subnets" {
   type        = number
   default     = 3
 }
+
+variable "kms_arn" {}
