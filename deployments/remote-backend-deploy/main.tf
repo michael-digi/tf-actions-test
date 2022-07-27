@@ -12,6 +12,6 @@ provider "aws" {
 
 
 module "remote_backend_s3" {
-  source = "../../../terraform-aws-remote-backend-s3"
+  source = "../../terraform-aws-remote-backend-s3"
   region = var.region
 }
