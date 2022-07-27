@@ -13,5 +13,6 @@ provider "aws" {
 
 module "remote_backend_s3" {
   source = "../../terraform-aws-backend-s3"
+  env = var.env
   region = var.region
 }
