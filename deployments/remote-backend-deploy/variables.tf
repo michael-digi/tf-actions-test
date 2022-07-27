@@ -10,12 +10,6 @@ variable "env" {
   default     = "dev"
 }
 
-variable "subnets" {
-  description = "Number of subnets"
-  type        = number
-  default     = 3
-}
-
 variable "kms_arn" {
   description = "Arn of KMS key for S3 bucket"
   type        = string
