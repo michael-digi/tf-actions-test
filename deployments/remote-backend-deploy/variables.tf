@@ -16,4 +16,8 @@ variable "subnets" {
   default     = 3
 }
 
-variable "kms_arn" {}
+variable "kms_arn" {
+  description = "Arn of KMS key for S3 bucket"
+  type        = string
+  default     = ""
+}
