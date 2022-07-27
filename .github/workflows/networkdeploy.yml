@@ -28,14 +28,14 @@ jobs:
   terraform-plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    env:
-        TF_WORKSPACE: us-east-1
+    # env:
+    #     TF_WORKSPACE: us-east-1
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-        working-directory: deployments/networkdeploy/${{ github.event.inputs.env }}
+        working-directory: deployments/network-deploy
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -59,8 +59,8 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      # with:
+      #   cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -68,25 +68,30 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend=true \
+	    -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" \
+	    -backend-config="key=state/terraform.tfstate" \
+	    -backend-config="region=us-east-1" \
+      -backend-config="dynamodb_table=terraform-state" \
+	    -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.networking_${{ github.event.inputs.env }} -var="region=us-east-1" -var="subnets=3" -var="env=${{ github.event.inputs.env }}" -input=true
+      run: terraform plan -target=module.networking -var="region=us-east-1" -var="subnets=3" -var="env=${{ github.event.inputs.env }}" -input=true
 
   terraform-apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.env }}
     needs: terraform-plan
-    env:
-        TF_WORKSPACE: us-east-1
+    # env:
+    #     TF_WORKSPACE: us-east-1
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-        working-directory: deployments/networkdeploy/${{ github.event.inputs.env }}
+        working-directory: deployments/network-deploy
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -110,8 +115,8 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      # with:
+      #   cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -119,12 +124,17 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend=true \
+	    -backend-config="bucket=${{ github.event.inputs.env }}-miked-us-east-1" \
+	    -backend-config="key=state/terraform.tfstate" \
+	    -backend-config="region=us-east-1" \
+      -backend-config="dynamodb_table=terraform-state" \
+	    -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.networking_${{ github.event.inputs.env }} -var="region=us-east-1" -var="subnets=3" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -target=module.networking -var="region=us-east-1" -var="subnets=3" -var="env=${{ github.event.inputs.env }}" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -target=module.networking_${{ github.event.inputs.env }} -input=true .terraform/terraform.tfplan
+      run: terraform apply -target=module.networking -input=true .terraform/terraform.tfplan
