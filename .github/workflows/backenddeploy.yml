@@ -2,14 +2,6 @@ name: 'S3 Remote State Deploy'
 
 on: 
   workflow_dispatch:
-    inputs:
-      env:
-        type: choice
-        default: staging
-        description: Select environment to deploy
-        options: 
-          - production
-          - staging
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'
@@ -20,8 +12,10 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ENV: staging
+  ENV: production
   AWS_REGION: us-east-1
+  ACCOUNT_ID: '417363389520'
+  NUM_SUBNETS: 3
 
 permissions:
   contents: read
@@ -30,8 +24,6 @@ jobs:
   terraform-plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    # env:
-    #     TF_WORKSPACE: us-east-1
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -46,14 +38,14 @@ jobs:
 
     # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
-      if: github.event.inputs.env == 'staging'
+      if: ${{ env.ENV == 'staging' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
     # This step is run when the tag is release-XXX
     - name: Sets env vars for production
-      if: github.event.inputs.env == 'production'
+      if: ${{ env.ENV == 'production' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
@@ -72,12 +64,12 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.remote_backend_s3 -var="region=us-east-1" -var="env=${{ github.event.inputs.env }}" -input=true
+      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$ACCOUNT_ID" -var="env=$ENV" -input=true
 
   terraform-apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.env }}
+    environment: $ENV
     needs: terraform-plan
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -121,7 +113,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply

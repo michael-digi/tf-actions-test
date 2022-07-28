@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform-state" {
- bucket = "${var.env}-miked-${var.region}"
+ bucket = "${var.account_id}-${var.env}-terraform-state"
  acl    = "private"
 
  versioning {
