@@ -52,7 +52,7 @@ jobs:
     
     - name: Check Account
       run: |
-        accountId=$(aws sts get-caller-identity | jq .Account)
+        accountId=$(aws sts get-caller-identity | jq -r .Account)
         echo "AWS_ACCOUNT_ID=$accountId" >> $GITHUB_ENV
     
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
@@ -104,7 +104,7 @@ jobs:
     
     - name: Check Account
       run: |
-        accountId=$(aws sts get-caller-identity | jq .Account)
+        accountId=$(aws sts get-caller-identity | jq -r .Account)
         echo "AWS_ACCOUNT_ID=$accountId" >> $GITHUB_ENV
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
