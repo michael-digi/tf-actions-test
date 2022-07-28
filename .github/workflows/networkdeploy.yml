@@ -2,14 +2,6 @@ name: 'Network Deploy'
 
 on: 
   workflow_dispatch:
-    inputs:
-      env:
-        type: choice
-        default: staging
-        description: Select environment to deploy
-        options: 
-          - production
-          - staging
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS access'
@@ -20,7 +12,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ENV: staging
+  ENV: production
   AWS_REGION: us-east-1
   ACCOUNT_ID: '417363389520'
   NUM_SUBNETS: 3
@@ -71,7 +63,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=$ACCOUNT_ID-$ENV-miked" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=$AWS_REGION" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=$AWS_REGION" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
@@ -80,7 +72,7 @@ jobs:
   terraform-apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: $ENV
+    environment: needs-approval
     needs: terraform-plan
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -118,7 +110,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=$ACCOUNT_ID-$ENV-miked" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=$AWS_REGION" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=$AWS_REGION" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
