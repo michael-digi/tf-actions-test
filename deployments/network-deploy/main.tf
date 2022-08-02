@@ -86,7 +86,7 @@ locals {
 }
 
 module "networking" {
-  source   = "../../module/terraform-aws-networking"
+  source   = "../../modules/terraform-aws-networking"
   vpc_name = "New"
   env = var.env
 

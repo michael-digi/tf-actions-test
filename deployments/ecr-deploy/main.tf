@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 module "ecr_repo" {
-  source = "../../terraform-aws-ecr"
+  source = "../../modules/terraform-aws-ecr"
 
   repository_list   = ["gck_portal_prod", "gck_portal_staging", "gck_portal_dev"]
   pull_account_list = [417363389520]
