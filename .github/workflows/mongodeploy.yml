@@ -9,12 +9,14 @@ on:
       AWS_SECRET_ACCESS_KEY:
         description: 'AWS secret'
         required: true
+
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ENV: staging
-  AWS_REGION: us-east-1
-  ACCOUNT_ID: '417363389520'
+  AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
+  AWS_SECRET_ACCESS_KEY: '' # Will be injected in a step below
+  ENV: staging # Change this to deploy to account of choice
+  AWS_REGION: us-east-1 # Change this to deploy to region of choice
+  ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
+  NUM_SUBNETS: 3 # Change this to select how many subnetworks/availability-zones created
 
 permissions:
   contents: read
@@ -49,6 +51,18 @@ jobs:
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
+    # This step is run when the tag is release-XXX
+    # - name: Sets env vars for production
+    #   if: ${{ env.ENV == 'dev' }}
+    #   run: |
+    #     echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+    #     echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+
+    - name: Inject AWS_ACCOUNT_ID into env
+      run: |
+        accountId=$(aws sts get-caller-identity | jq -r .Account)
+        echo "AWS_ACCOUNT_ID=$accountId" >> $GITHUB_ENV
+    
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -59,7 +73,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
@@ -68,7 +82,7 @@ jobs:
   terraform-apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: $ENV
+    environment: needs-approval
     needs: terraform-plan
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -95,6 +109,17 @@ jobs:
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+    
+    # - name: Sets env vars for production
+    #   if: ${{ env.ENV == 'dev' }}
+    #   run: |
+    #     echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+    #     echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+
+    - name: Inject AWS_ACCOUNT_ID into env
+      run: |
+        accountId=$(aws sts get-caller-identity | jq -r .Account)
+        echo "AWS_ACCOUNT_ID=$accountId" >> $GITHUB_ENV
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -106,7 +131,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan

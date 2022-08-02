@@ -9,13 +9,14 @@ on:
       AWS_SECRET_ACCESS_KEY:
         description: 'AWS secret'
         required: true
+
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ENV: production
-  AWS_REGION: us-west-2
-  AWS_ACCOUNT_ID: ''
-  NUM_SUBNETS: 3
+  AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
+  AWS_SECRET_ACCESS_KEY: '' # Will be injected in a step below
+  ENV: staging # Change this to deploy to account of choice
+  AWS_REGION: us-east-1 # Change this to deploy to region of choice
+  ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
+  NUM_SUBNETS: 3 # Change this to select how many subnetworks/availability-zones created
   
 permissions:
   contents: read
@@ -49,6 +50,13 @@ jobs:
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+    
+    # This step is run when the tag is release-XXX
+    # - name: Sets env vars for production
+    #   if: ${{ env.ENV == 'dev' }}
+    #   run: |
+    #     echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+    #     echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
     
     - name: Check Account
       run: |
@@ -102,7 +110,13 @@ jobs:
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
-    - name: Check Account
+    # - name: Sets env vars for production
+    #   if: ${{ env.ENV == 'dev' }}
+    #   run: |
+    #     echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+    #     echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+
+    - name: Inject AWS_ACCOUNT_ID into env
       run: |
         accountId=$(aws sts get-caller-identity | jq -r .Account)
         echo "AWS_ACCOUNT_ID=$accountId" >> $GITHUB_ENV

@@ -40,7 +40,7 @@ locals {
 }
 
 module "networking" {
-  source = "../../../terraform-aws-networking"
+  source = "../../modules/terraform-aws-networking"
   env    = var.env
   region = var.region
 
@@ -49,7 +49,7 @@ module "networking" {
 }
 
 module "ecs" {
-  source = "../../../terraform-aws-ecs"
+  source = "../../modules/terraform-aws-ecs"
 
   private_subnets = module.networking.private_subnets
   public_subnets  = module.networking.public_subnets

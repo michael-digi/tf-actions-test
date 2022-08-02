@@ -17,7 +17,7 @@ provider "aws" {
 data "aws_vpc" "vpc" {
   filter {
     name   = "tag:Name"
-    values = ["Primary_${var.env}"]
+    values = ["primary_${var.env}"]
   }
 }
 
@@ -29,7 +29,7 @@ data "aws_subnets" "private" {
 
   filter {
     name   = "tag:Vpc"
-    values = ["Primary_${var.env}"]
+    values = ["primary_${var.env}"]
   }
 }
 
@@ -46,7 +46,7 @@ data "aws_subnets" "public" {
 
   filter {
     name   = "tag:Vpc"
-    values = ["Primary_${var.env}"]
+    values = ["primary_${var.env}"]
   }
 }
 
@@ -66,7 +66,7 @@ locals {
 }
 
 module "ecs" {
-  source = "../../terraform-aws-ecs"
+  source = "../../modules/terraform-aws-ecs"
 
   private_subnets = local.private_subnet_cidr_blocks.value
   public_subnets  = local.public_subnet_cidr_blocks.value

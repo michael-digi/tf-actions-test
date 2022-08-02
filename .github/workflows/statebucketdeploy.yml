@@ -1,4 +1,4 @@
-name: 'S3 Remote State Deploy'
+name: 'Deploy New State Bucket'
 
 on: 
   workflow_dispatch:
@@ -9,13 +9,13 @@ on:
       AWS_SECRET_ACCESS_KEY:
         description: 'AWS secret'
         required: true
+
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ENV: production
-  AWS_REGION: us-east-1
-  ACCOUNT_ID: '417363389520'
-  NUM_SUBNETS: 3
+  AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
+  AWS_SECRET_ACCESS_KEY: '' # Will be injected in a step below
+  ENV: staging # Change this to deploy to account of choice
+  AWS_REGION: us-east-1 # Change this to deploy to region of choice
+  ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
 
 permissions:
   contents: read
@@ -50,6 +50,17 @@ jobs:
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
+    # - name: Sets env vars for production
+    #   if: ${{ env.ENV == 'dev' }}
+    #   run: |
+    #     echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+    #     echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+
+    - name: Inject AWS_ACCOUNT_ID into env
+      run: |
+        accountId=$(aws sts get-caller-identity | jq -r .Account)
+        echo "AWS_ACCOUNT_ID=$accountId" >> $GITHUB_ENV
+    
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -64,7 +75,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$ACCOUNT_ID" -var="env=$ENV" -input=true
+      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true
 
   terraform-apply:
     name: 'Terraform Apply'
@@ -96,12 +107,21 @@ jobs:
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+    
+    # - name: Sets env vars for production
+    #   if: ${{ env.ENV == 'dev' }}
+    #   run: |
+    #     echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+    #     echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+
+    - name: Inject AWS_ACCOUNT_ID into env
+      run: |
+        accountId=$(aws sts get-caller-identity | jq -r .Account)
+        echo "AWS_ACCOUNT_ID=$accountId" >> $GITHUB_ENV
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-      # with:
-      #   cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -113,7 +133,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply

@@ -16,7 +16,7 @@ resource "aws_vpc" "primary_vpc" {
   enable_dns_support   = var.enable_dns_support
 
   tags = {
-    Name = "Primary_${var.env}"
+    Name = "primary_${var.env}"
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_subnet" "private_subnets" {
   tags = {
     Name = "Private Subnet (${lookup(var.public_private_subnet_pairs[count.index], "az")})"
     Tier = "Private Subnets"
-    Vpc  = "Primary_${var.env}"
+    Vpc  = "primary_${var.env}"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_subnet" "public_subnets" {
   tags = {
     Name = "Public Subnet (${lookup(var.public_private_subnet_pairs[count.index], "az")})"
     Tier = "Public Subnets"
-    Vpc  = "Primary_${var.env}"
+    Vpc  = "primary_${var.env}"
   }
 }
 

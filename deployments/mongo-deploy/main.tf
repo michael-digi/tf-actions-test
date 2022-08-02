@@ -17,7 +17,7 @@ provider "aws" {
 data "aws_vpc" "vpc" {
   filter {
     name   = "tag:Name"
-    values = ["Primary_${var.env}"]
+    values = ["primary_${var.env}"]
   }
 }
 
@@ -29,7 +29,7 @@ data "aws_subnets" "private" {
 
   filter {
     name   = "tag:Vpc"
-    values = ["Primary_${var.env}"]
+    values = ["primary_${var.env}"]
   }
 }
 
@@ -45,7 +45,7 @@ locals {
 }
 
 module "mongo" {
-  source = "../../../terraform-aws-mongo"
+  source = "../../module/terraform-aws-mongo"
   private_subnets = local.private_subnet_ids.value
   region = var.region
   vpc_id = data.aws_vpc.vpc.id
