@@ -42,29 +42,6 @@ locals {
   staging = flatten([
     {
       az          = "${var.region}a"
-      cidr        = "10.0.64.0/20"
-      public_cidr = "10.0.0.0/20"
-    },
-    {
-      az          = "${var.region}b"
-      cidr        = "10.0.80.0/20"
-      public_cidr = "10.0.16.0/20"
-    },
-    {
-      az          = "${var.region}c"
-      cidr        = "10.0.96.0/20"
-      public_cidr = "10.0.32.0/20"
-    },
-    var.subnets == 4 ? [{
-      az          = "${var.region}d"
-      cidr        = "10.0.112.0/20"
-      public_cidr = "10.0.48.0/20"
-    }] : []
-  ])
-
-  dev = flatten([
-    {
-      az          = "${var.region}a"
       cidr        = "192.168.64.0/20"
       public_cidr = "192.168.0.0/20"
     },
@@ -84,11 +61,34 @@ locals {
       public_cidr = "192.168.48.0/20"
     }] : []
   ])
+
+  dev = flatten([
+    {
+      az          = "${var.region}a"
+      cidr        = "10.0.64.0/20"
+      public_cidr = "10.0.0.0/20"
+    },
+    {
+      az          = "${var.region}b"
+      cidr        = "10.0.80.0/20"
+      public_cidr = "10.0.16.0/20"
+    },
+    {
+      az          = "${var.region}c"
+      cidr        = "10.0.96.0/20"
+      public_cidr = "10.0.32.0/20"
+    },
+    var.subnets == 4 ? [{
+      az          = "${var.region}d"
+      cidr        = "10.0.112.0/20"
+      public_cidr = "10.0.48.0/20"
+    }] : []
+  ])
   }
 }
 
 module "networking" {
-  source   = "../../module/terraform-aws-networking"
+  source   = "../../modules/terraform-aws-networking"
   vpc_name = "New"
   env = var.env
 
