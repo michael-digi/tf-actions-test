@@ -5,6 +5,7 @@ resource "aws_s3_bucket" "terraform-state" {
  versioning {
    enabled = true
  }
+}
 
  resource "aws_dynamodb_table" "terraform-state" {
  name           = "terraform-state"
@@ -16,7 +17,6 @@ resource "aws_s3_bucket" "terraform-state" {
    name = "LockID"
    type = "S"
  }
-}
 
 #  server_side_encryption_configuration {
 #    rule {
