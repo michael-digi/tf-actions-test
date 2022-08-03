@@ -1,0 +1,7 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/michaeldigiorgio/Desktop/GoCheck/tf-actions-test'
+ 
+make: Leaving directory `/Users/michaeldigiorgio/Desktop/GoCheck/tf-actions-test'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+

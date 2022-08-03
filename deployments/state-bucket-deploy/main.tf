@@ -10,17 +10,17 @@ provider "aws" {
   region = var.region
 }
 
-# resource "aws_dynamodb_table" "terraform-state" {
-#  name           = "terraform-state"
-#  read_capacity  = 20
-#  write_capacity = 20
-#  hash_key       = "LockID"
+resource "aws_dynamodb_table" "terraform-state" {
+ name           = "terraform-state"
+ read_capacity  = 20
+ write_capacity = 20
+ hash_key       = "LockID"
 
-#  attribute {
-#    name = "LockID"
-#    type = "S"
-#  }
-# }
+ attribute {
+   name = "LockID"
+   type = "S"
+ }
+}
 
 # resource "aws_kms_key" "terraform-bucket-key" {
 #  description             = "This key is used to encrypt bucket objects"
@@ -34,7 +34,7 @@ provider "aws" {
 # }
 
 module "remote_backend_s3" {
-  source = "../../modules/terraform-aws-backend-s3"
+  source = "../../modules/terraform-aws-state-bucket"
   env = var.env
   region = var.region
   account_id = var.account_id
