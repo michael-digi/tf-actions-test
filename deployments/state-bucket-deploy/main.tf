@@ -10,18 +10,6 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_dynamodb_table" "terraform-state" {
- name           = "terraform-state"
- read_capacity  = 20
- write_capacity = 20
- hash_key       = "LockID"
-
- attribute {
-   name = "LockID"
-   type = "S"
- }
-}
-
 # resource "aws_kms_key" "terraform-bucket-key" {
 #  description             = "This key is used to encrypt bucket objects"
 #  deletion_window_in_days = 10
