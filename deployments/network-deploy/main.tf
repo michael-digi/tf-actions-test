@@ -93,5 +93,5 @@ module "networking" {
   env = var.env
 
   public_private_subnet_pairs = local.subnet_pairs[var.env]
-  vpc_primary_cidr            = var.vpc_cidr
+  vpc_primary_cidr            = var.vpc_cidr[var.env]
 }

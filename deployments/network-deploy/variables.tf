@@ -1,4 +1,10 @@
-variable "vpc_cidr" { default = "172.16.0.0/16" }
+variable "vpc_cidr" {
+  default = {
+    production = "172.16.0.0/16",
+    staging = "192.168.0.0/16",
+    dev = "10.0.0.0/16"
+  } 
+}
 
 variable "region" {
   description = "Region to deploy to"
