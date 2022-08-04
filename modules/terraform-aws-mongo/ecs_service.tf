@@ -30,6 +30,10 @@ resource "aws_ecs_service" "gck_mongo2" {
     subnets          = var.private_subnets
     assign_public_ip = false
   }
+
+  depends_on = [
+    aws_ecs_service.gck_mongo1
+  ]
 }
 
 resource "aws_ecs_service" "gck_mongo3" {
@@ -47,4 +51,8 @@ resource "aws_ecs_service" "gck_mongo3" {
     subnets          = var.private_subnets
     assign_public_ip = false
   }
+
+  depends_on = [
+    aws_ecs_service.gck_mongo2
+  ]
 }
