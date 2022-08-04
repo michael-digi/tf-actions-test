@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
-    name = "mongo_replica_1"
+    name = "mongo_volume_1"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
     }]
     mountPoints = [{
       containerPath : "/data"
-      sourceVolume : "mongo_replica_1"
+      sourceVolume : "mongo_volume_1"
     }]
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
@@ -61,7 +61,7 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
-    name = "mongo_replica_2"
+    name = "mongo_volume_2"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
@@ -77,7 +77,7 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
     }]
     mountPoints = [{
       containerPath : "/data"
-      sourceVolume : "mongo_replica_2"
+      sourceVolume : "mongo_volume_2"
     }]
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
@@ -105,7 +105,7 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
   execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
   task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
   volume {
-    name = "mongo_replica_3"
+    name = "mongo_volume_3"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
@@ -121,7 +121,7 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
     }]
     mountPoints = [{
       containerPath : "/data"
-      sourceVolume : "mongo_replica_3"
+      sourceVolume : "mongo_volume_3"
     }]
     "environment" = [
       { "name" : "DOMAIN", "value" : "miked.com." },
