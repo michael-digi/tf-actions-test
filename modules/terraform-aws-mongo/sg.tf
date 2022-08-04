@@ -54,11 +54,10 @@ resource "aws_security_group" "vpc_access" {
   vpc_id = var.vpc_id
 
   ingress {
-    protocol         = "tcp"
+    protocol         = "-1"
     from_port        = 0
     to_port          = 0
     cidr_blocks      = ["192.168.0.0/16"]
-    security_groups = [aws_security_group.mongo.id]
     ipv6_cidr_blocks = ["::/0"]
   }
 
