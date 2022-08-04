@@ -35,7 +35,7 @@ resource "aws_security_group" "efs" {
     protocol         = "tcp"
     from_port        = 2409
     to_port          = 2409
-    cidr_blocks      = [""]
+    cidr_blocks      = []
     security_groups = [aws_security_group.mongo.id]
     ipv6_cidr_blocks = ["::/0"]
   }
