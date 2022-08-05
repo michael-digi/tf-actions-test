@@ -10,6 +10,10 @@ variable "env" {
   default     = "dev"
 }
 
+variable "account_id" {
+  default = ""
+}
+
 variable "subnets" {
   description = "Number of subnets"
   type        = number

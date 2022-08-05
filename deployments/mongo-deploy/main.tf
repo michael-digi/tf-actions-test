@@ -50,4 +50,5 @@ module "mongo" {
   env = var.env
   region = var.region
   vpc_id = data.aws_vpc.vpc.id
+  account_id = var.account_id
 }

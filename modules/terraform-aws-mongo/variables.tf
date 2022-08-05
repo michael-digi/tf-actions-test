@@ -10,5 +10,9 @@ variable "env" {
   default = "production"
 }
 
+variable "account_id" {
+  default = ""
+}
+
 variable "private_subnets" {}
 variable "vpc_id" {}
