@@ -13,13 +13,9 @@ resource "aws_ecs_service" "gck_portal" {
     assign_public_ip = false
   }
 
-  load_balancer {
-    target_group_arn = aws_alb_target_group.gck_portal.arn
-    container_name   = "${var.app_name}-container-${var.env}"
-    container_port   = 80
-  }
-
-  lifecycle {
-    ignore_changes = [task_definition]
-  }
+  # load_balancer {
+  #   target_group_arn = aws_alb_target_group.gck_portal.arn
+  #   container_name   = "${var.app_name}-container-${var.env}"
+  #   container_port   = 80
+  # }
 }
