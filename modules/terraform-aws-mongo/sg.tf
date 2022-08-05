@@ -61,7 +61,7 @@ resource "aws_security_group" "efs" {
   }
 }
 
-resource "aws_security_group_rule" "efs_ingress" {
+resource "aws_security_group_rule" "efs_ingress_tcp" {
   type              = "ingress"
   protocol          = "tcp"
   from_port         = 2049
@@ -70,7 +70,7 @@ resource "aws_security_group_rule" "efs_ingress" {
   source_security_group_id = aws_security_group.mongo.id
 }
 
-resource "aws_security_group_rule" "efs_ingress" {
+resource "aws_security_group_rule" "efs_ingress_icmp" {
   type              = "ingress"
   protocol          = "icmp"
   from_port         = 8
