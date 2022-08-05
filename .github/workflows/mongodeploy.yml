@@ -77,7 +77,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.mongo -var="region=$AWS_REGION" -var="env=$ENV" -input=true
+      run: terraform plan -target=module.mongo -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true
 
   terraform-apply:
     name: 'Terraform Apply'
@@ -135,7 +135,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan  -target=module.mongo -var="region=$AWS_REGION" -var="env=$ENV" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan  -target=module.mongo -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
