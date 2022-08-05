@@ -26,7 +26,7 @@ resource "aws_security_group" "mongo" {
   description = "Access between Mongo nodes."
   
   tags = {
-    Name = "${var.env}_omnilert_private_vpc_access"
+    Name = "${var.env}_mongo_access"
   }
 }
 
@@ -57,7 +57,7 @@ resource "aws_security_group" "efs" {
   description = "Access between Mongo nodes."
   
   tags = {
-    Name = "${var.env}_omnilert_private_vpc_access"
+    Name = "${var.env}_efs_access"
   }
 }
 
@@ -67,6 +67,15 @@ resource "aws_security_group_rule" "efs_ingress" {
   from_port         = 2049
   to_port           = 2049
   security_group_id = aws_security_group.efs.id
+  source_security_group_id = aws_security_group.mongo.id
+}
+
+resource "aws_security_group_rule" "efs_ingress" {
+  type              = "ingress"
+  protocol          = "icmp"
+  from_port         = 8
+  to_port           = 0
+  security_group_id = aws_security_group.mongo.id
   source_security_group_id = aws_security_group.mongo.id
 }
 
