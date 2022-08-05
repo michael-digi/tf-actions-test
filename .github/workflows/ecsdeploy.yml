@@ -88,7 +88,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecsdeploy
+        working-directory: deployments/ecs-deploy
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -97,14 +97,14 @@ jobs:
     
     # If env is staging, pull keys used to deploy to staging
     - name: Sets env vars for staging
-      if: github.event.inputs.env == 'staging'
+      if: ${{ env.ENV == 'staging' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
     
     # If env is production, pull keys used to deploy to production
     - name: Sets env vars for production
-      if: github.event.inputs.env == 'production'
+      if: ${{ env.ENV == 'production' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV

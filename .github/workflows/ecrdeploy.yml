@@ -87,7 +87,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecrdeploy
+        working-directory: deployments/ecr-deploy
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -96,14 +96,14 @@ jobs:
     
     # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
-      if: github.event.inputs.env == 'staging'
+      if: ${{ env.ENV == 'staging' }}
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}" >> $GITHUB_ENV
     
      # This step is run when the tag is release-XXX
     - name: Sets env vars for production
-      if: github.event.inputs.env == 'production'
+      if: ${{ env.ENV == 'production' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
