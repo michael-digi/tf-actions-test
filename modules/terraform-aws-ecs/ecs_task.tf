@@ -16,4 +16,12 @@ resource "aws_ecs_task_definition" "gck_portal" {
       hostPort      = 80
     }]
   }])
+  logConfiguration = {
+      logDriver : "awslogs",
+      options : {
+        awslogs-group : "portal",
+        awslogs-region : "us-east-1",
+        awslogs-stream-prefix : "ecs"
+      }
+    }
 }
