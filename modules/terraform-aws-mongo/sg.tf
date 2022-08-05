@@ -30,11 +30,20 @@ resource "aws_security_group" "mongo" {
   }
 }
 
-resource "aws_security_group_rule" "mongo_ingress" {
+resource "aws_security_group_rule" "mongo_ingress_tcp" {
   type              = "ingress"
   protocol          = "tcp"
   from_port         = 27017
   to_port           = 27017
+  security_group_id = aws_security_group.mongo.id
+  source_security_group_id = aws_security_group.mongo.id
+}
+
+resource "aws_security_group_rule" "mongo_ingress_icmp" {
+  type              = "ingress"
+  protocol          = "icmp"
+  from_port         = 8
+  to_port           = 0
   security_group_id = aws_security_group.mongo.id
   source_security_group_id = aws_security_group.mongo.id
 }
@@ -67,15 +76,6 @@ resource "aws_security_group_rule" "efs_ingress_tcp" {
   from_port         = 2049
   to_port           = 2049
   security_group_id = aws_security_group.efs.id
-  source_security_group_id = aws_security_group.mongo.id
-}
-
-resource "aws_security_group_rule" "efs_ingress_icmp" {
-  type              = "ingress"
-  protocol          = "icmp"
-  from_port         = 8
-  to_port           = 0
-  security_group_id = aws_security_group.mongo.id
   source_security_group_id = aws_security_group.mongo.id
 }
 
