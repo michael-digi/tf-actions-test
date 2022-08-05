@@ -16,7 +16,7 @@ env:
   ENV: staging # Change this to deploy to account of choice
   AWS_REGION: us-east-1 # Change this to deploy to region of choice
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
-  NUM_CONTAINERS: 3 # Change this to select how many container copies will be deployed
+  NUM_CONTAINERS: 1 # Change this to select how many container copies will be deployed
 
 permissions:
   contents: read
@@ -30,7 +30,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecsdeploy
+        working-directory: deployments/ecs-deploy
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -39,14 +39,14 @@ jobs:
     
     # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
-      if: github.event.inputs.env == 'staging'
+      if: ${{ env.ENV == 'staging' }}
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}" >> $GITHUB_ENV
     
      # This step is run when the tag is release-XXX
     - name: Sets env vars for production
-      if: github.event.inputs.env == 'production'
+      if: ${{ env.ENV == 'production' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
