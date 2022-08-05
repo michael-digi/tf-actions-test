@@ -23,7 +23,7 @@ resource "aws_alb_target_group" "gck_portal" {
     protocol            = "HTTP"
     matcher             = "200"
     timeout             = "3"
-    path                = "/ping"
+    path                = "/"
     unhealthy_threshold = "2"
   }
 }
