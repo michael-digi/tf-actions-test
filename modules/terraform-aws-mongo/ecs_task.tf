@@ -14,8 +14,8 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
   memory                   = 512
-  execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
-  task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
+  execution_role_arn       = "arn:aws:iam::952899752506:role/mongo-ecsTaskExecutionRole-staging-us-west-2"
+  task_role_arn            = "arn:aws:iam::952899752506:role/mongo-ecsTaskRole-staging-us-west-2"
   volume {
     name = "mongo_volume_1"
     efs_volume_configuration {
@@ -58,8 +58,8 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
   memory                   = 512
-  execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
-  task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
+  execution_role_arn       = "arn:aws:iam::952899752506:role/mongo-ecsTaskExecutionRole-staging-us-west-2"
+  task_role_arn            = "arn:aws:iam::952899752506:role/mongo-ecsTaskRole-staging-us-west-2"
   volume {
     name = "mongo_volume_2"
     efs_volume_configuration {
@@ -102,8 +102,8 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
   memory                   = 512
-  execution_role_arn       = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskExecutionRole_production"
-  task_role_arn            = "arn:aws:iam::417363389520:role/gck-portal-ecsTaskRole_production"
+  execution_role_arn       = "arn:aws:iam::952899752506:role/mongo-ecsTaskExecutionRole-staging-us-west-2"
+  task_role_arn            = "arn:aws:iam::952899752506:role/mongo-ecsTaskRole-staging-us-west-2"
   volume {
     name = "mongo_volume_3"
     efs_volume_configuration {
