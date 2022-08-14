@@ -41,7 +41,7 @@ EOF
 
 resource "aws_iam_policy" "ecs_fargate_exec" {
   name   = "${var.env}_ecs_fargate_exec"
-  policy = data.aws_iam_policy_document.ip_logger_ecs_task.json
+  policy = data.aws_iam_policy_document.ecs_fargate_task.json
 }
 
 data "aws_iam_policy_document" "ecs_fargate_exec" {
