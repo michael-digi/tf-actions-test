@@ -2,8 +2,8 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
   network_mode             = "awsvpc"
   family                   = "mongo1"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 512
-  memory                   = 1024
+  cpu                      = 1024
+  memory                   = 2048
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   volume {
@@ -50,8 +50,8 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   network_mode             = "awsvpc"
   family                   = "mongo2"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 512
-  memory                   = 1024
+  cpu                      = 1024
+  memory                   = 2048
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   volume {
@@ -98,8 +98,8 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
   network_mode             = "awsvpc"
   family                   = "mongo3"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 512
-  memory                   = 1024
+  cpu                      = 1024
+  memory                   = 2048
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   volume {
