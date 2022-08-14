@@ -26,9 +26,9 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       sourceVolume : "mongo_volume_1"
     }]
     "environment" = [
-      { "name" : "DOMAIN", "value" : "gocheck-${var.env}.com." },
-      { "name" : "SUB_DOMAIN", "value" : "mongo01.gocheck-${var.env}.com." },
-      { "name" : "DATA_DIR", "value" : "mongo01" },
+      { "name" : "DOMAIN", "value" : "miked.com." },
+      { "name" : "SUB_DOMAIN", "value" : "mongo1.miked.com." },
+      { "name" : "DATA_DIR", "value" : "mongo1" },
       { "name" : "LEADER", "value" : "true" }
     ],
     linuxParameters: {
@@ -74,9 +74,9 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       sourceVolume : "mongo_volume_2"
     }]
     "environment" = [
-      { "name" : "DOMAIN", "value" : "gocheck-${var.env}.com." },
-      { "name" : "SUB_DOMAIN", "value" : "mongo02.gocheck-${var.env}.com." },
-      { "name" : "DATA_DIR", "value" : "mongo02" },
+      { "name" : "DOMAIN", "value" : "miked.com." },
+      { "name" : "SUB_DOMAIN", "value" : "mongo2.miked.com." },
+      { "name" : "DATA_DIR", "value" : "mongo2" },
       { "name" : "LEADER", "value" : "false" }
     ],
     linuxParameters: {
@@ -122,9 +122,9 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       sourceVolume : "mongo_volume_3"
     }]
     "environment" = [
-      { "name" : "DOMAIN", "value" : "gocheck-${var.env}.com." },
-      { "name" : "SUB_DOMAIN", "value" : "mongo03.gocheck-${var.env}.com." },
-      { "name" : "DATA_DIR", "value" : "mongo03" },
+      { "name" : "DOMAIN", "value" : "miked.com." },
+      { "name" : "SUB_DOMAIN", "value" : "mongo3.miked.com." },
+      { "name" : "DATA_DIR", "value" : "mongo3" },
       { "name" : "LEADER", "value" : "false" }
     ],
     linuxParameters: {

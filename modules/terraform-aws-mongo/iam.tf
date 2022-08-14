@@ -50,7 +50,8 @@ data "aws_iam_policy_document" "ecs_fargate_exec" {
       "ssmmessages:CreateControlChannel",
       "ssmmessages:CreateDataChannel",
       "ssmmessages:OpenControlChannel",
-      "ssmmessages:OpenDataChannel"
+      "ssmmessages:OpenDataChannel",
+      "ecs:ExecuteCommand",
     ]
     resources = ["*"]
   }
