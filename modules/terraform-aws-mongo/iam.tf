@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_task_role" {
-  name = "mongo-ecsTaskRole-${var.env}-${var.region}"
+  name = "MongoEcsTaskRole${var.env}${var.region}"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +20,7 @@ EOF
 
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "mongo-ecsTaskExecutionRole-${var.env}-${var.region}"
+  name = "MongoEcsTaskExecutionRole${var.env}${var.region}"
 
   assume_role_policy = <<EOF
 {
@@ -57,7 +57,7 @@ data "aws_iam_policy_document" "ecs_fargate_exec" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_mongo" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
