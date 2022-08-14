@@ -77,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_fargate_exec" {
-  role       = aws_iam_role.ecs_task_execution_role.name
+  role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.ecs_fargate_exec.arn
 }
 
@@ -85,4 +85,3 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.ecs_route53.arn
 }
-
