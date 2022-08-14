@@ -53,3 +53,7 @@ variable "num_containers" {
   type        = number
   default     = 1
 }
+
+variable "alb_tls_cert_arn" {
+  default = ""
+}

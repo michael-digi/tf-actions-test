@@ -7,7 +7,7 @@ variable "region" {
 }
 
 variable "env" {
-  default = "production"
+  default = "staging"
 }
 
 variable "account_id" {

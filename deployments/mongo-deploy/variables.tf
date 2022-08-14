@@ -11,11 +11,6 @@ variable "env" {
 }
 
 variable "account_id" {
+  type = string
   default = ""
-}
-
-variable "subnets" {
-  description = "Number of subnets"
-  type        = number
-  default     = 3
 }

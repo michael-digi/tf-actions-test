@@ -9,13 +9,14 @@ resource "aws_ecs_service" "gck_portal" {
   scheduling_strategy                = "REPLICA"
 
   network_configuration {
-    subnets          = var.private_subnets
-    assign_public_ip = false
+    security_groups = [aws_security_group.from_alb.id]
+    subnets          = var.public_subnets
+    assign_public_ip = true
   }
 
   # load_balancer {
   #   target_group_arn = aws_alb_target_group.gck_portal.arn
   #   container_name   = "${var.app_name}-container-${var.env}"
-  #   container_port   = 80
+  #   container_port   = 443
   # }
 }

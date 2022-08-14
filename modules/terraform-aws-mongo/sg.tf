@@ -63,7 +63,7 @@ resource "aws_security_group" "efs" {
   name   = "efs-sg-${var.env}-${var.region}"
   vpc_id = var.vpc_id
   
-  description = "Access between Mongo nodes."
+  description = "Access into EFS."
   
   tags = {
     Name = "${var.env}_efs_access"
