@@ -14,7 +14,7 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
   }
   container_definitions = jsonencode([{
     name      = "monogo1-container-${var.env}"
-    image     = "952899752506.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_staging:latest"
+    image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_staging:latest"
     essential = true
     portMappings = [{
       protocol      = "tcp"
@@ -31,6 +31,9 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       { "name" : "DATA_DIR", "value" : "mongo01" },
       { "name" : "LEADER", "value" : "true" }
     ],
+    linuxParameters: {
+      initProcessEnabled: true
+    }, 
     logConfiguration = {
       logDriver : "awslogs",
       options : {
@@ -76,6 +79,9 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       { "name" : "DATA_DIR", "value" : "mongo02" },
       { "name" : "LEADER", "value" : "false" }
     ],
+    linuxParameters: {
+      initProcessEnabled: true
+    },
     logConfiguration = {
       logDriver : "awslogs",
       options : {
@@ -104,7 +110,7 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
   }
   container_definitions = jsonencode([{
     name      = "monogo3-container-${var.env}"
-    image     = "952899752506.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_staging:latest"
+    image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_staging:latest"
     essential = true
     portMappings = [{
       protocol      = "tcp"
@@ -121,6 +127,9 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       { "name" : "DATA_DIR", "value" : "mongo03" },
       { "name" : "LEADER", "value" : "false" }
     ],
+    linuxParameters: {
+      initProcessEnabled: true
+    },
     logConfiguration = {
       logDriver : "awslogs",
       options : {
