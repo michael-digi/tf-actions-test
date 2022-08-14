@@ -62,7 +62,7 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   }
   container_definitions = jsonencode([{
     name      = "monogo2-container-${var.env}"
-    image     = "952899752506.dkr.ecr.us-east-1.amazonaws.com/mongocluster:latest"
+    image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongocluster:latest"
     essential = true
     portMappings = [{
       protocol      = "tcp"
