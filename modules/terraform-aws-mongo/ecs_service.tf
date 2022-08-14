@@ -7,6 +7,7 @@ resource "aws_ecs_service" "gck_mongo1" {
   deployment_maximum_percent         = 200
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
+  enable_execute_command = true
 
   network_configuration {
     security_groups  = [aws_security_group.mongo.id]
@@ -24,6 +25,7 @@ resource "aws_ecs_service" "gck_mongo2" {
   deployment_maximum_percent         = 200
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
+  enable_execute_command = true
 
   network_configuration {
     security_groups  = [aws_security_group.mongo.id]
@@ -41,6 +43,7 @@ resource "aws_ecs_service" "gck_mongo3" {
   deployment_maximum_percent         = 200
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
+  enable_execute_command = true
 
   network_configuration {
     security_groups  = [aws_security_group.mongo.id]
