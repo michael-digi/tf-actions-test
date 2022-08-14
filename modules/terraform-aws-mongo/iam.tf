@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_task_role" {
-  name = "MongoEcsTaskRole${var.env}${var.region}"
+  name = "MongoEcsTaskRole-${var.env}-${var.region}"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +20,7 @@ EOF
 
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "MongoEcsTaskExecutionRole${var.env}${var.region}"
+  name = "MongoEcsTaskExecutionRole-${var.env}-${var.region}"
 
   assume_role_policy = <<EOF
 {
@@ -37,6 +37,20 @@ resource "aws_iam_role" "ecs_task_execution_role" {
  ]
 }
 EOF
+}
+
+resource "aws_iam_policy" "ecs_route53" {
+  name   = "${var.env}_ecs_route53"
+  policy = data.aws_iam_policy_document.ecs_route53.json
+}
+
+data "aws_iam_policy_document" "ecs_route53" {
+  statement {
+    actions = [
+      "route53:*",
+    ]
+    resources = ["*"]
+  }
 }
 
 resource "aws_iam_policy" "ecs_fargate_exec" {
@@ -65,5 +79,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_fargate_exec" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = aws_iam_policy.ecs_fargate_exec.arn
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_ecs_route53" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.ecs_route53.arn
 }
 
