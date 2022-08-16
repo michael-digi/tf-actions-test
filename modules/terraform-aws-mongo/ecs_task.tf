@@ -26,14 +26,14 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
       sourceVolume : "mongo_volume_1"
     }]
     "environment" = [
-      { "name" : "DOMAIN", "value" : "miked.com." },
-      { "name" : "SUB_DOMAIN", "value" : "mongo1.miked.com." },
+      { "name" : "DOMAIN", "value" : "${aws_route53_zone.private.name}." },
+      { "name" : "SUB_DOMAIN", "value" : "${aws_route53_record.mongo_node_dns[0].name}." },
       { "name" : "DATA_DIR", "value" : "mongo1" },
       { "name" : "LEADER", "value" : "true" }
-    ],
-    linuxParameters: {
-      initProcessEnabled: true
-    }, 
+    ]
+    linuxParameters = {
+      initProcessEnabled: var.env == "dev" || var.env == "staging" ? true : false
+    }
     logConfiguration = {
       logDriver : "awslogs",
       options : {
@@ -74,14 +74,14 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
       sourceVolume : "mongo_volume_2"
     }]
     "environment" = [
-      { "name" : "DOMAIN", "value" : "miked.com." },
-      { "name" : "SUB_DOMAIN", "value" : "mongo2.miked.com." },
+      { "name" : "DOMAIN", "value" : "${aws_route53_zone.private.name}." },
+      { "name" : "SUB_DOMAIN", "value" : "${aws_route53_record.mongo_node_dns[1].name}." },
       { "name" : "DATA_DIR", "value" : "mongo2" },
       { "name" : "LEADER", "value" : "false" }
-    ],
-    linuxParameters: {
-      initProcessEnabled: true
-    },
+    ]
+    linuxParameters = {
+      initProcessEnabled: var.env == "dev" || var.env == "staging" ? true : false
+    }
     logConfiguration = {
       logDriver : "awslogs",
       options : {
@@ -122,14 +122,14 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
       sourceVolume : "mongo_volume_3"
     }]
     "environment" = [
-      { "name" : "DOMAIN", "value" : "miked.com." },
-      { "name" : "SUB_DOMAIN", "value" : "mongo3.miked.com." },
+      { "name" : "DOMAIN", "value" : "${aws_route53_zone.private.name}." },
+      { "name" : "SUB_DOMAIN", "value" : "${aws_route53_record.mongo_node_dns[2].name}." },
       { "name" : "DATA_DIR", "value" : "mongo3" },
       { "name" : "LEADER", "value" : "false" }
     ],
-    linuxParameters: {
-      initProcessEnabled: true
-    },
+    linuxParameters = {
+      initProcessEnabled: var.env == "dev" || var.env == "staging" ? true : false
+    }
     logConfiguration = {
       logDriver : "awslogs",
       options : {
