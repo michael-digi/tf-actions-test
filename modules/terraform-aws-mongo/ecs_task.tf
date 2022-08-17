@@ -37,8 +37,8 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
     logConfiguration = {
       logDriver : "awslogs",
       options : {
-        awslogs-group : "mongo",
-        awslogs-region : "us-east-1",
+        awslogs-group : "mongo/${var.region}",
+        awslogs-region : var.region,
         awslogs-stream-prefix : "ecs",
         awslogs-create-group: "true"
       }
@@ -85,8 +85,8 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
     logConfiguration = {
       logDriver : "awslogs",
       options : {
-        awslogs-group : "mongo",
-        awslogs-region : "us-east-1",
+        awslogs-group : "mongo/${var.region}",
+        awslogs-region : var.region,
         awslogs-stream-prefix : "ecs",
         awslogs-create-group: "true"
       }
@@ -133,8 +133,8 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
     logConfiguration = {
       logDriver : "awslogs",
       options : {
-        awslogs-group : "mongo",
-        awslogs-region : "us-east-1",
+        awslogs-group : "mongo/${var.region}",
+        awslogs-region : var.region,
         awslogs-stream-prefix : "ecs",
         awslogs-create-group: "true"
       }
