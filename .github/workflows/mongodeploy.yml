@@ -16,7 +16,6 @@ env:
   ENV: staging # Change this to deploy to account of choice
   AWS_REGION: us-east-1 # Change this to deploy to region of choice
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
-  NUM_SUBNETS: 3 # Change this to select how many subnetworks/availability-zones created
 
 permissions:
   contents: read
