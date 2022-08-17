@@ -89,9 +89,9 @@ locals {
 
 module "networking" {
   source   = "../../modules/terraform-aws-networking"
-  vpc_name = "${var.env}_${var.region}_vpc"
+  vpc_name = "${var.env}-${var.region}-vpc"
   env = var.env
-
+  region = var.region
   public_private_subnet_pairs = local.subnet_pairs[var.env]
   vpc_primary_cidr            = var.vpc_cidr[var.env]
 }
