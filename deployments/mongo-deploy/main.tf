@@ -52,4 +52,5 @@ module "mongo" {
   region = var.region
   vpc_id = data.aws_vpc.vpc.id
   account_id = var.account_id
+  mongo_node_count = var.mongo_node_count
 }

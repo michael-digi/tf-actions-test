@@ -19,3 +19,7 @@ variable "image" {
   type = string
   default = ""
 }
+
+variable "mongo_node_count" {
+  default = 3
+}

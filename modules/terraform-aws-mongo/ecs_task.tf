@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "gck_mongo" {
-  count = 3
+  count = var.mongo_node_count
   network_mode             = "awsvpc"
   family                   = "mongo0${count.index + 1}"
   requires_compatibilities = ["FARGATE"]

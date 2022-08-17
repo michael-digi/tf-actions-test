@@ -18,6 +18,11 @@ variable "image" {
   default = ""
 }
 
+variable "mongo_node_count" {
+  default = 3
+}
+
 variable "private_subnets" {}
+
 variable "vpc_id" {}
 

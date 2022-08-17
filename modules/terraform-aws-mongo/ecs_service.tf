@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "gck_mongo" {
-  count = 3
+  count = var.mongo_node_count
   name                               = "mongo0${count.index+1}-service-${var.env}-${var.region}"
   cluster                            = aws_ecs_cluster.gck_mongo.id
   task_definition                    = aws_ecs_task_definition.gck_mongo[count.index].arn
