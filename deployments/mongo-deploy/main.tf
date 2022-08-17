@@ -17,7 +17,7 @@ provider "aws" {
 data "aws_vpc" "vpc" {
   filter {
     name   = "tag:Name"
-    values = ["primary_${var.env}_${var.region}"]
+    values = ["primary-${var.env}-${var.region}"]
   }
 }
 
@@ -29,7 +29,7 @@ data "aws_subnets" "private" {
 
   filter {
     name   = "tag:Vpc"
-    values = ["primary_${var.env}_${var.region}"]
+    values = ["primary-${var.env}-${var.region}"]
   }
 }
 
