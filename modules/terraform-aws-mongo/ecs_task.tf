@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   volume {
-    name = "mongo_volume_2"
+    name = "mongo_volume_02"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
