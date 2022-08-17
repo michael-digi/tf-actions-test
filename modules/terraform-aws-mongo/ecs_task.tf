@@ -8,13 +8,13 @@ resource "aws_ecs_task_definition" "gck_mongo" {
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   volume {
-    name = "mongo_volume_0${count.index + 1}"
+    name = "mongo_volume_0${count.index+1}"
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.mongo_replica.id
     }
   }
   container_definitions = jsonencode([{
-    name      = "mongo0${count.index + 1}-container-${var.env}-${var.region}"
+    name      = "mongo0${count.index+1}-container-${var.env}-${var.region}"
     image     = var.image
     essential = true
     portMappings = [{
@@ -24,12 +24,12 @@ resource "aws_ecs_task_definition" "gck_mongo" {
     }]
     mountPoints = [{
       containerPath : "/data"
-      sourceVolume : "mongo_volume_0${count.index + 1}"
+      sourceVolume : "mongo_volume_0${count.index+1}"
     }]
     "environment" = [
-      { "name" : "DOMAIN", "value" : "${aws_route53_zone.private.name}." },
-      { "name" : "SUB_DOMAIN", "value" : "mongo0${count.index + 1}.${aws_route53_zone.private.name}." },
-      { "name" : "DATA_DIR", "value" : "mongo0${count.index + 1}" },
+      { "name" : "DOMAIN", "value" : "${aws_route53_zone.private.name}."},
+      { "name" : "SUB_DOMAIN", "value" : "mongo0${count.index+1}.${aws_route53_zone.private.name}." },
+      { "name" : "DATA_DIR", "value" : "mongo0${count.index+1}" },
       { "name" : "LEADER", "value" : "true" }
     ]
     linuxParameters = {
