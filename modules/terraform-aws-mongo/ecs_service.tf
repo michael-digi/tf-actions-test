@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "gck_mongo1" {
-  name                               = "mongo1-service-${var.env}"
+  name                               = "mongo1-service-${var.env}-${var.region}"
   cluster                            = aws_ecs_cluster.gck_mongo.id
   task_definition                    = aws_ecs_task_definition.gck_mongo1.arn
   desired_count                      = 1
@@ -17,7 +17,7 @@ resource "aws_ecs_service" "gck_mongo1" {
 }
 
 resource "aws_ecs_service" "gck_mongo2" {
-  name                               = "mongo2-service-${var.env}"
+  name                               = "mongo2-service-${var.env}-${var.region}"
   cluster                            = aws_ecs_cluster.gck_mongo.id
   task_definition                    = aws_ecs_task_definition.gck_mongo2.arn
   desired_count                      = 1
@@ -35,7 +35,7 @@ resource "aws_ecs_service" "gck_mongo2" {
 }
 
 resource "aws_ecs_service" "gck_mongo3" {
-  name                               = "mongo3-service-${var.env}"
+  name                               = "mongo3-service-${var.env}-${var.region}"
   cluster                            = aws_ecs_cluster.gck_mongo.id
   task_definition                    = aws_ecs_task_definition.gck_mongo3.arn
   desired_count                      = 1

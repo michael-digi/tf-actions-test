@@ -13,8 +13,8 @@ resource "aws_ecs_task_definition" "gck_mongo1" {
     }
   }
   container_definitions = jsonencode([{
-    name      = "mongo01-container-${var.env}"
-    image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_${var.env}:latest"
+    name      = "mongo01-container-${var.env}-${var.region}"
+    image     = var.image
     essential = true
     portMappings = [{
       protocol      = "tcp"
@@ -61,8 +61,8 @@ resource "aws_ecs_task_definition" "gck_mongo2" {
     }
   }
   container_definitions = jsonencode([{
-    name      = "mongo02-container-${var.env}"
-    image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_${var.env}:latest"
+    name      = "mongo02-container-${var.env}-${var.region}"
+    image     = var.image
     essential = true
     portMappings = [{
       protocol      = "tcp"
@@ -109,8 +109,8 @@ resource "aws_ecs_task_definition" "gck_mongo3" {
     }
   }
   container_definitions = jsonencode([{
-    name      = "mongo03-container-${var.env}"
-    image     = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_${var.env}:latest"
+    name      = "mongo03-container-${var.env}-${var.region}"
+    image     = var.image
     essential = true
     portMappings = [{
       protocol      = "tcp"

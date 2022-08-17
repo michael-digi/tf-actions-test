@@ -14,3 +14,8 @@ variable "account_id" {
   type = string
   default = ""
 }
+
+variable "image" {
+  type = string
+  default = ""
+}

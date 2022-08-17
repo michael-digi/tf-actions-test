@@ -14,5 +14,10 @@ variable "account_id" {
   default = ""
 }
 
+variable "image" {
+  default = ""
+}
+
 variable "private_subnets" {}
 variable "vpc_id" {}
+

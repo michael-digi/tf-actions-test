@@ -40,7 +40,7 @@ EOF
 }
 
 resource "aws_iam_policy" "ecs_route53" {
-  name   = "${var.env}_ecs_route53"
+  name   = "ecs_route53_${var.env}_${var.region}"
   policy = data.aws_iam_policy_document.ecs_route53.json
 }
 
@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "ecs_route53" {
 }
 
 resource "aws_iam_policy" "ecs_fargate_exec" {
-  name   = "${var.env}_ecs_fargate_exec"
+  name   = "ecs_fargate_exec_${var.env}_${var.region}"
   policy = data.aws_iam_policy_document.ecs_fargate_exec.json
 }
 

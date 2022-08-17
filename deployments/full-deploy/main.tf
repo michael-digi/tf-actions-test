@@ -43,20 +43,16 @@ module "networking" {
   source = "../../modules/terraform-aws-networking"
   env    = var.env
   region = var.region
-
   public_private_subnet_pairs = local.subnet_pairs
   vpc_primary_cidr            = var.vpc_cidr
 }
 
 module "ecs" {
   source = "../../modules/terraform-aws-ecs"
-
   private_subnets = module.networking.private_subnets
   public_subnets  = module.networking.public_subnets
-
   num_containers = var.num_containers
   region = var.region
   env = var.env
-
   vpc_id = module.networking.vpc_id
 }
