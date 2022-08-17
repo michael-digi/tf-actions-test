@@ -48,7 +48,6 @@ data "aws_iam_policy_document" "ecs_route53" {
   statement {
     actions = [
       "route53:*",
-      "logs:CreateLogGroup"
     ]
     resources = ["*"]
   }
@@ -72,9 +71,28 @@ data "aws_iam_policy_document" "ecs_fargate_exec" {
   }
 }
 
+resource "aws_iam_policy" "ecs_cloudwatch" {
+  name   = "ecs_cloudwatch_${var.env}_${var.region}"
+  policy = data.aws_iam_policy_document.ecs_cloudwatch.json
+}
+
+data "aws_iam_policy_document" "ecs_cloudwatch" {
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+    ]
+    resources = ["*"]
+  }
+}
+
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_mongo" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_cloudwatch" {
+  role       = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = aws_iam_policy.ecs_cloudwatch.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_fargate_exec" {
