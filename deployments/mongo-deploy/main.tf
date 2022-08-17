@@ -47,7 +47,7 @@ locals {
 module "mongo" {
   source = "../../modules/terraform-aws-mongo"
   private_subnets = local.private_subnet_ids.value
-  image = "417363389520.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_${var.env}:latest"
+  image = "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/mongo_cluster_${var.env}:latest"
   env = var.env
   region = var.region
   vpc_id = data.aws_vpc.vpc.id
