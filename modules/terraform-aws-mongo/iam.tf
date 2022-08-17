@@ -48,6 +48,7 @@ data "aws_iam_policy_document" "ecs_route53" {
   statement {
     actions = [
       "route53:*",
+      "logs:CreateLogGroup"
     ]
     resources = ["*"]
   }
