@@ -30,7 +30,9 @@ resource "aws_ecs_task_definition" "gck_mongo" {
       { "name" : "DOMAIN", "value" : "${aws_route53_zone.private.name}."},
       { "name" : "SUB_DOMAIN", "value" : "mongo0${count.index+1}.${aws_route53_zone.private.name}." },
       { "name" : "DATA_DIR", "value" : "mongo0${count.index+1}" },
-      { "name" : "LEADER", "value" : "true" }
+      count.index == 0 
+        ? [{ "name" : "LEADER", "value" : "true" }] 
+        : [{ "name" : "LEADER", "value" : "false" }]
     ]
     linuxParameters = {
       initProcessEnabled: var.env == "dev" || var.env == "staging" ? true : false
