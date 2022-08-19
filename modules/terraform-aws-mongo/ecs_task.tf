@@ -23,7 +23,7 @@ resource "aws_ecs_task_definition" "gck_mongo" {
       hostPort      = 27017
     }]
     mountPoints = [{
-      containerPath : "/data"
+      containerPath : "/"
       sourceVolume : "mongo_volume_0${count.index+1}"
     }]
     "environment" = [
