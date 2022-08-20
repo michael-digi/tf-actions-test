@@ -9,3 +9,18 @@ variable "app_name" {
   type        = string
   default     = "gck-portal"
 }
+
+variable "account_id_prod" {
+  type        = string
+  default     = "152823419987"
+}
+
+variable "account_id_staging" {
+  type        = string
+  default     = "952899752506"
+}
+
+variable "account_id_dev" {
+  type        = string
+  default     = "946265355097"
+}
