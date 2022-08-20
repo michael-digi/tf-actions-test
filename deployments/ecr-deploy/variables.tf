@@ -10,7 +10,7 @@ variable "app_name" {
   default     = "gck-portal"
 }
 
-variable "account_id_prod" {
+variable "account_id_production" {
   type        = string
   default     = "152823419987"
 }

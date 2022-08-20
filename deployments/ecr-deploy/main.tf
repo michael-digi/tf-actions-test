@@ -18,10 +18,10 @@ module "ecr_repo" {
   source = "../../modules/terraform-aws-ecr"
 
   repository_list   = [
-    "gck_portal_prod", 
+    "gck_portal_production", 
     "gck_portal_staging", 
     "gck_portal_dev",
-    "mongo_cluster_prod",
+    "mongo_cluster_production",
     "mongo_cluster_staging",
     "mongo_cluster_dev",
   ]
