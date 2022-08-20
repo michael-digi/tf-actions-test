@@ -27,13 +27,13 @@ module "ecr_repo" {
   ]
   
   pull_account_list = [
-    var.account_id_prod,
+    var.account_id_production,
     var.account_id_staging,
     var.account_id_dev,
   ]
 
   push_account_list = [
-    var.account_id_prod,
+    var.account_id_production,
     var.account_id_staging,
     var.account_id_dev,
   ]
