@@ -74,7 +74,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.networking -var="region=$AWS_REGION" -var="subnets=$NUM_SUBNETS" -var="env=$ENV" -input=true
+      run: terraform plan -var="region=$AWS_REGION" -var="subnets=$NUM_SUBNETS" -var="env=$ENV" -input=true
 
   terraform-apply:
     name: 'Terraform Apply'
