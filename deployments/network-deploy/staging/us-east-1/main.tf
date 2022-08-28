@@ -88,7 +88,7 @@ locals {
 }
 
 module "networking" {
-  source   = abspath("modules/terraform-aws-networking")
+  source   = "../../../../modules/terraform-aws-networking"
   vpc_name = "${var.env}-${var.region}-vpc"
   env = var.env
   region = var.region
