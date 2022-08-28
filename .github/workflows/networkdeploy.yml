@@ -23,7 +23,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/network-deploy
+        working-directory: deployments/network-deploy/$ENV/$REGION
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -82,7 +82,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/network-deploy
+        working-directory: deployments/network-deploy/$ENV/$REGION
 
     steps:
     # Checkout the repository to the GitHub Actions runner
