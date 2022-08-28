@@ -48,7 +48,7 @@ module "networking" {
 }
 
 module "ecs" {
-  source = "../../../../modules/terraform-aws-ecs"
+  source = abspath("modules/terraform-aws-ecs")
   private_subnets = module.networking.private_subnets
   public_subnets  = module.networking.public_subnets
   num_containers = var.num_containers
