@@ -40,7 +40,7 @@ EOF
 }
 
 resource "aws_iam_policy" "ecs_route53" {
-  name   = "ecs_route53_${var.env}_${var.region}"
+  name   = "ecs-route53-${var.env}-${var.region}"
   policy = data.aws_iam_policy_document.ecs_route53.json
 }
 
@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "ecs_route53" {
 }
 
 resource "aws_iam_policy" "ecs_fargate_exec" {
-  name   = "ecs_fargate_exec_${var.env}_${var.region}"
+  name   = "ecs-fargate-exec-${var.env}-${var.region}"
   policy = data.aws_iam_policy_document.ecs_fargate_exec.json
 }
 
@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "ecs_fargate_exec" {
 }
 
 resource "aws_iam_policy" "ecs_cloudwatch" {
-  name   = "ecs_cloudwatch_${var.env}_${var.region}"
+  name   = "ecs-cloudwatch-${var.env}-${var.region}"
   policy = data.aws_iam_policy_document.ecs_cloudwatch.json
 }
 
@@ -80,6 +80,25 @@ data "aws_iam_policy_document" "ecs_cloudwatch" {
   statement {
     actions = [
       "logs:CreateLogGroup",
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "ecs_secrets_manager" {
+  name   = "ecs-secrets-manager-${var.env}-${var.region}"
+  policy = data.aws_iam_policy_document.ecs_secrets_manager.json
+}
+
+data "aws_iam_policy_document" "ecs_secrets_manager" {
+  statement {
+    actions = [
+      "secretsmanager:UpdateSecret",
+      "secretsmanager:PutSecretValue",
+      "secretsmanager:ListSecrets",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:CreateSecret",
     ]
     resources = ["*"]
   }
@@ -103,4 +122,9 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_ecs_route53" {
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.ecs_route53.arn
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_ecs_secrets_manager" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.ecs_secrets_manager.arn
 }

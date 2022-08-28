@@ -1,5 +1,13 @@
+data "aws_security_group" "mongo_access" {
+  vpc_id = var.vpc_id
+
+  tags = {
+    Name        = "mongo-access-${var.env}-${var.region}"
+  }
+}
+
 resource "aws_ecs_service" "gck_portal" {
-  name                               = "${var.app_name}-service-${var.env}"
+  name                               = "${var.app_name}-service-${var.env}-${var.region}"
   cluster                            = aws_ecs_cluster.gck_portal.id
   task_definition                    = aws_ecs_task_definition.gck_portal.arn
   desired_count                      = var.num_containers
@@ -9,7 +17,9 @@ resource "aws_ecs_service" "gck_portal" {
   scheduling_strategy                = "REPLICA"
 
   network_configuration {
-    security_groups = [aws_security_group.from_alb.id]
+    security_groups = [
+      data.aws_security_group.mongo_access.id
+    ]
     subnets          = var.public_subnets
     assign_public_ip = true
   }

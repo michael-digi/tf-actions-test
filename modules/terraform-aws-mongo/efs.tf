@@ -1,6 +1,14 @@
 resource "aws_efs_file_system" "mongo_replica" {
-  creation_token = "mongo_replica_${var.env}_${var.region}"
+  creation_token = "mongo-replica-${var.env}-${var.region}"
   encrypted      = true
+}
+
+resource "aws_efs_backup_policy" "policy" {
+  file_system_id = aws_efs_file_system.mongo_replica.id
+
+  backup_policy {
+    status = "ENABLED"
+  }
 }
 
 resource "aws_efs_mount_target" "mongo_replica" {

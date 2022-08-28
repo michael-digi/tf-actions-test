@@ -15,3 +15,19 @@ variable "num_containers" {
   type        = number
   default     = 2
 }
+
+variable "account_id" {
+  default = ""
+}
+
+variable "ecr_repo_admin_account" {
+  default = "314694303532"
+}
+
+variable "ecr_repo_admin_region" {
+  default = "us-east-1"
+}
+
+variable "image" {
+  default = ""
+}

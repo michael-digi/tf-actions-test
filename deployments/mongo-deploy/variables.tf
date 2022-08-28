@@ -15,6 +15,16 @@ variable "account_id" {
   default = ""
 }
 
+variable "ecr_repo_admin_account" {
+  type = string
+  default = "314694303532"
+}
+
+variable "ecr_repo_admin_region" {
+  type = string
+  default = "us-east-1"
+}
+
 variable "image" {
   type = string
   default = ""

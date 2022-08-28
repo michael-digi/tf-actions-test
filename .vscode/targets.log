@@ -7,10 +7,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
  
-make: *** No rule to make target `all'.  Stop.
 
-
-# Make data base, printed on Fri Aug 12 14:03:05 2022
+# Make data base, printed on Mon Aug 22 14:51:04 2022
 
 # Variables
 
@@ -39,8 +37,6 @@ VSCODE_CWD = /
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # environment
-LaunchInstanceID = 1775B7A8-E0F1-4A6F-926A-6F34FA51D62F
-# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
@@ -59,7 +55,7 @@ HOME = /Users/michaeldigiorgio
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/michaeldigiorgio/Library/Application Support/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = /Users/michaeldigiorgio/Library/Application Support/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LOGNAME = michaeldigiorgio
 # environment
@@ -91,10 +87,9 @@ MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
 # environment
 TMPDIR = /var/folders/5j/ljz93hcj0nxdp925pk5mbrwr0000gn/T/
 # automatic
- 
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/michaeldigiorgio/Library/Application Support/Code/1.69.2-main.sock
+VSCODE_IPC_HOOK = /Users/michaeldigiorgio/Library/Application Support/Code/1.70.2-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -104,7 +99,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x1000004f.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -119,8 +114,6 @@ MAKEFILES :=
 <F = $(notdir $<)
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186a6
 # automatic
 ^F = $(notdir $^)
 # default
@@ -132,9 +125,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 340
+VSCODE_PID = 49985
 # variable set hash-table stats:
-# Load=59/1024=6%, Rehash=0, Collisions=1/80=1%
+# Load=57/1024=6%, Rehash=0, Collisions=1/78=1%
 
 # Pattern-specific Variable Values
 
@@ -216,6 +209,8 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Fri Aug 12 14:03:05 2022
+# Finished Make data base on Mon Aug 22 14:51:04 2022
 
  
+make: *** No rule to make target `all'.  Stop.
+

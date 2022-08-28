@@ -6,7 +6,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
   AWS_SECRET_ACCESS_KEY: '' # Will be injected in a step below
-  ENV: staging # Change this to deploy to account of choice
+  ENV: admin # Change this to deploy to account of choice
   AWS_REGION: us-east-1 # Change this to deploy to region of choice
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
 
@@ -29,23 +29,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     
-    - name: Sets env vars for staging
-      if: ${{ env.ENV == 'staging' }}
+    - name: Sets env vars for admin
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}" >> $GITHUB_ENV
-    
-    - name: Sets env vars for production
-      if: ${{ env.ENV == 'production' }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-    
-    - name: Sets env vars for dev
-      if: ${{ env.ENV == 'dev' }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_ADMIN }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_ADMIN }}" >> $GITHUB_ENV
 
     - name: Inject AWS_ACCOUNT_ID into env
       run: |
@@ -85,23 +72,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     
-    - name: Sets env vars for staging
-      if: ${{ env.ENV == 'staging' }}
+    - name: Sets env vars for admin
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}" >> $GITHUB_ENV
-    
-    - name: Sets env vars for production
-      if: ${{ env.ENV == 'production' }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-    
-    - name: Sets env vars for dev
-      if: ${{ env.ENV == 'dev' }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_ADMIN }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_ADMIN }}" >> $GITHUB_ENV
 
     - name: Inject AWS_ACCOUNT_ID into env
       run: |

@@ -3,8 +3,8 @@ resource "aws_ecs_task_definition" "gck_mongo" {
   network_mode             = "awsvpc"
   family                   = "mongo0${count.index + 1}"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 1024
-  memory                   = 2048
+  cpu                      = 512
+  memory                   = 1024
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   volume {
@@ -30,12 +30,14 @@ resource "aws_ecs_task_definition" "gck_mongo" {
       { "name" : "DOMAIN", "value" : "${aws_route53_zone.private.name}."},
       { "name" : "SUB_DOMAIN", "value" : "mongo0${count.index+1}.${aws_route53_zone.private.name}." },
       { "name" : "DATA_DIR", "value" : "mongo0${count.index+1}" },
+      { "name" : "ENV", "value" : "${var.env}" },
+      { "name" : "REGION", "value" : "${var.region}" },
       count.index == 0 
         ? { "name" : "LEADER", "value" : "true" }
         : { "name" : "LEADER", "value" : "false" }
     ]
     linuxParameters = {
-      initProcessEnabled: var.env == "dev" || var.env == "staging" ? true : false
+      initProcessEnabled: (var.env == "dev" || var.env == "staging") ? true : false
     }
     logConfiguration = {
       logDriver : "awslogs",

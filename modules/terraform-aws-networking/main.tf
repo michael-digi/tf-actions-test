@@ -63,6 +63,8 @@ resource "aws_eip" "nat_ip" {
 
   tags = {
     Name = "NAT EIP"
+    Env = var.env
+    Region = var.region
   }
 }
 
@@ -74,5 +76,7 @@ resource "aws_nat_gateway" "nat_gw" {
 
   tags = {
     Name = "NAT Gateway for private subnets"
+    Env = var.env
+    Region = var.region
   }
 }

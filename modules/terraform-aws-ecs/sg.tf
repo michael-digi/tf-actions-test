@@ -66,3 +66,4 @@ resource "aws_security_group_rule" "from_alb_egress" {
     "0.0.0.0/0"
   ]
 }
+
