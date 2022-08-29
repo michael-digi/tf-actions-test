@@ -17,6 +17,7 @@ env:
   AWS_REGION: us-east-2 # Change this to deploy to region of choice
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
   NUM_CONTAINERS: 1 # Change this to select how many container copies will be deployed
+  INFRASTRUCTURE: portal
 
 permissions:
   contents: read
@@ -30,7 +31,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecs-deploy/$ENV/$REGION
+        working-directory: deployments/ecs-deploy/${{ ENV }}/${{ REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -73,11 +74,11 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/$INFRASTRUCTURE/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.ecs -var="num_containers=$NUM_CONTAINERS" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -var="num_containers=$NUM_CONTAINERS" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
   
   terraform-apply:
     name: 'Terraform Apply'
@@ -89,7 +90,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecs-deploy/$ENV/$REGION
+        working-directory: deployments/ecs-deploy/${{ ENV }}/${{ REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -128,7 +129,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/$INFRASTRUCTURE/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -136,8 +137,8 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.ecs -var="num_containers=$NUM_CONTAINERS" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -var="num_containers=$NUM_CONTAINERS" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -target=module.ecs -input=true .terraform/terraform.tfplan
+      run: terraform apply -input=true .terraform/terraform.tfplan

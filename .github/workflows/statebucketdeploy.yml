@@ -6,8 +6,8 @@ on:
 env:
   AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
   AWS_SECRET_ACCESS_KEY: '' # Will be injected in a step below
-  ENV: admin # Change this to deploy to account of choice
-  AWS_REGION: us-east-1 # Change this to deploy to region of choice
+  ENV: staging # Change this to deploy to account of choice
+  AWS_REGION: us-east-1
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
 
 permissions:
@@ -22,7 +22,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/state-bucket-deploy
+        working-directory: deployments/state-bucket-deploy/${{ env.ENV }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
