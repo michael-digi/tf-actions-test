@@ -10,6 +10,7 @@ env:
   AWS_REGION: us-east-1 # Change this to deploy to region of choice
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
   NUM_SUBNETS: 3 # Change this to select how many subnetworks/availability-zones created
+  INFRASTRUCTURE: network
   
 permissions:
   contents: read
@@ -66,7 +67,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/$INFRASTRUCTURE/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
     
     # Pull test
     - name: Terraform State Pull
@@ -129,12 +130,12 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+      run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/$INFRASTRUCTURE/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.networking -var="region=$AWS_REGION" -var="subnets=$NUM_SUBNETS" -var="env=$ENV" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -var="region=$AWS_REGION" -var="subnets=$NUM_SUBNETS" -var="env=$ENV" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -target=module.networking -input=true .terraform/terraform.tfplan
+      run: terraform apply -input=true .terraform/terraform.tfplan
