@@ -24,7 +24,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/mongo-deploy/${{ ENV }}/${{ REGION }}
+        working-directory: deployments/mongo-deploy/${{ env.ENV }}/${{ env.REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
