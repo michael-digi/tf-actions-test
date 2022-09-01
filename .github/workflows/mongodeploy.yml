@@ -83,7 +83,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/mongo-deploy/${{ ENV }}/${{ REGION }}
+        working-directory: deployments/mongo-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -130,8 +130,8 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan  -target=module.mongo -var="mongo_node_count=$MONGO_NODE_COUNT" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -var="mongo_node_count=$MONGO_NODE_COUNT" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -target=module.mongo -input=true .terraform/terraform.tfplan
+      run: terraform apply -input=true .terraform/terraform.tfplan

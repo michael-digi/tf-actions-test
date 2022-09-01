@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 module "ecr_repo" {
-  source = "../../modules/terraform-aws-ecr"
+  source = "../../../../modules/terraform-aws-ecr"
 
   repository_list   = [
     "gck_portal_production", 

@@ -45,7 +45,7 @@ locals {
 }
 
 module "mongo" {
-  source = "../../modules/terraform-aws-mongo"
+  source = "../../../../modules/terraform-aws-mongo"
   private_subnets = local.private_subnet_ids.value
   image = "${var.ecr_repo_admin_account}.dkr.ecr.${var.ecr_repo_admin_region}.amazonaws.com/mongo_cluster_${var.env}:latest"
   env = var.env
