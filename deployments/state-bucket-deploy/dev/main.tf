@@ -22,7 +22,7 @@ provider "aws" {
 # }
 
 module "remote_backend_s3" {
-  source = "../../modules/terraform-aws-state-bucket"
+  source = "../../../modules/terraform-aws-state-bucket"
   env = var.env
   region = var.region
   account_id = var.account_id
