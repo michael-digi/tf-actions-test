@@ -17,7 +17,7 @@ variable "account_id" {
 
 variable "ecr_repo_admin_account" {
   type = string
-  default = "314694303532"
+  default = "417363389520"
 }
 
 variable "ecr_repo_admin_region" {
