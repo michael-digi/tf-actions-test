@@ -86,7 +86,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/state-bucket-deploy
+        working-directory: deployments/state-bucket-deploy/${{ env.ENV }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -139,8 +139,8 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
+      run: terraform plan -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -target=module.remote_backend_s3 -input=true .terraform/terraform.tfplan
+      run: terraform apply -input=true .terraform/terraform.tfplan
