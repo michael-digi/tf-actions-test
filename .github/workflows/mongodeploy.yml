@@ -73,14 +73,10 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -var="mongo_node_count=$MONGO_NODE_COUNT" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=terraform.tfplan
     
-    - run: ls
-
-    - run: cat ./terraform.tfplan
-    
     - uses: actions/upload-artifact@v2
       with:
         name: terraform-plan
-        path: ./terraform.tfplan
+        path: deployments/mongo-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}/terraform.tfplan
 
   terraform-apply:
     name: 'Terraform Apply'
