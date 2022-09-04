@@ -23,7 +23,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecr-deploy/${{ REGION }}
+        working-directory: deployments/ecr-deploy/${{ env.AWS_REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
