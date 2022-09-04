@@ -71,11 +71,12 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -var="mongo_node_count=$MONGO_NODE_COUNT" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=tfplan.txt
+      run: terraform plan -var="mongo_node_count=$MONGO_NODE_COUNT" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=terraform.tfplan
     
-    - run: pwd
-
-    - run: ls
+    - uses: actions/upload-artifact@v2
+      with:
+        name: terraform-plan
+        path: terraform.tfplan
 
   terraform-apply:
     name: 'Terraform Apply'
@@ -131,11 +132,15 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init -backend=true -backend-config="bucket=$AWS_ACCOUNT_ID-$ENV-terraform-state" -backend-config="key=$AWS_REGION/$INFRASTRUCTURE/state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="dynamodb_table=terraform-state" -force-copy
+    
+    - uses: actions/download-artifact@v2
+      with:
+        name: terraform-plan
 
     # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan -var="mongo_node_count=$MONGO_NODE_COUNT" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
+    # - name: Terraform Plan
+    #   run: terraform plan -var="mongo_node_count=$MONGO_NODE_COUNT" -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -input=true .terraform/terraform.tfplan
+      run: terraform apply -input=true terraform-plan
