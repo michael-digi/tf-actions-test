@@ -136,7 +136,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: terraform-plan
-        path: deployments/mongo-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}/terraform.tfplan
+        path: deployments/mongo-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}
 
     # Generates an execution plan for Terraform
     # - name: Terraform Plan
@@ -145,8 +145,6 @@ jobs:
     - run: ls
 
     - run: pwd
-
-    - run: cd terraform.tfplan; ls
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
