@@ -143,4 +143,4 @@ jobs:
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -input=true terraform-plan
+      run: terraform apply -input=true terraform.tfplan
