@@ -143,4 +143,4 @@ jobs:
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -input=true terraform.tfplan
+      run: terraform apply -input=true deployments/mongo-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}/terraform.tfplan
