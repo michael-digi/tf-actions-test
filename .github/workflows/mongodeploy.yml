@@ -146,9 +146,7 @@ jobs:
 
     - run: pwd
 
-    - run: cat ./terraform.tfplan
-
-    - run: cat terraform.tfplan
+    - run: cd terraform.tfplan; ls
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
