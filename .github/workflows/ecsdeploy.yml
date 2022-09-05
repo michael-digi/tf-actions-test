@@ -17,7 +17,7 @@ env:
   AWS_REGION: us-east-2 # Change this to deploy to region of choice
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
   NUM_CONTAINERS: 1 # Change this to select how many container copies will be deployed
-  AWS_ADMIN_ACCOUND_ID: "314694303532"
+  AWS_ADMIN_ACCOUNT_ID: "417363389520"
   INFRASTRUCTURE: portal
 
 permissions:
