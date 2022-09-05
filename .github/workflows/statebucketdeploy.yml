@@ -40,20 +40,14 @@ jobs:
     - name: Sets env vars for production
       if: ${{ env.ENV == 'production' }}
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PRODUCTION }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PRODUCTION }}" >> $GITHUB_ENV
     
     - name: Sets env vars for dev
       if: ${{ env.ENV == 'dev' }}
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-    
-    - name: Sets env vars for admin
-      if: ${{ env.ENV == 'admin' }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_ADMIN }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_ADMIN }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
 
     - name: Inject AWS_ACCOUNT_ID into env
       run: |
@@ -74,7 +68,13 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true
+      run: terraform plan -target=module.remote_backend_s3 -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=terraform.tfplan
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: terraform-plan
+        path: deployments/state-bucket-deploy/${{ env.ENV }}/terraform.tfplan
+        retention-days: 1
 
   terraform-apply:
     name: 'Terraform Apply'
@@ -93,33 +93,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Select staging keys when 'staging' selected
+    # This step is run when the tag is release-XXX
+    - name: Sets env vars for production
+      if: ${{ env.ENV == 'production' }}
+      run: |
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PRODUCTION }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PRODUCTION }}" >> $GITHUB_ENV
+
+    # This step is run when the tag is release-XXX
     - name: Sets env vars for staging
       if: ${{ env.ENV == 'staging' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}" >> $GITHUB_ENV
     
-    # Select dev keys when 'production' selected
-    - name: Sets env vars for production
-      if: ${{ env.ENV == 'production' }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-    
-    # Select production keys when 'dev' selected
     - name: Sets env vars for dev
       if: ${{ env.ENV == 'dev' }}
       run: |
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
-    
-    - name: Sets env vars for admin
-      if: ${{ env.ENV == 'admin' }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_ADMIN }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_ADMIN }}" >> $GITHUB_ENV
-
     - name: Inject AWS_ACCOUNT_ID into env
       run: |
         accountId=$(aws sts get-caller-identity | jq -r .Account)
@@ -136,11 +128,12 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
+    
+    - uses: actions/download-artifact@v2
+      with:
+        name: terraform-plan
+        path: deployments/mongo-deploy/${{ env.ENV }}
 
     # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan -var="region=$AWS_REGION" -var="env=$ENV" -var="account_id=$AWS_ACCOUNT_ID" -input=true -out=.terraform/terraform.tfplan
-    
-    # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply -input=true .terraform/terraform.tfplan
+      run: terraform apply -input=true terraform.tfplan
