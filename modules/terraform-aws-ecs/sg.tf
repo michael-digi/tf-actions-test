@@ -35,6 +35,8 @@ resource "aws_security_group" "from_alb" {
   
   tags = {
     Name = "${var.env}_from_alb_access"
+    Env = "${var.env}"
+    Region = "${var.region}"
   }
 }
 

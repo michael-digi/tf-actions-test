@@ -3,6 +3,8 @@ data "aws_security_group" "mongo_access" {
 
   tags = {
     Name        = "mongo-access-${var.env}-${var.region}"
+    Env = "${var.env}"
+    Region = "${var.region}"
   }
 }
 

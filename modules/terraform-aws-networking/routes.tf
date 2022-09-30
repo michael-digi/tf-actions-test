@@ -14,6 +14,8 @@ resource "aws_route_table" "private_route_table" {
 
   tags = {
     Name = "Private routing table"
+    Env = var.env
+    Region = var.region
   }
 }
 

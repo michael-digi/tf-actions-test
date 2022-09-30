@@ -17,7 +17,7 @@ env:
   AWS_REGION: us-east-2 # Change this to deploy to region of choice
   AWS_ACCOUNT_ID: '' # Will be looked up via the access/secret key and injected in a step below
   NUM_CONTAINERS: 1 # Change this to select how many container copies will be deployed
-  AWS_ADMIN_ACCOUNT_ID: "417363389520"
+  AWS_ADMIN_ACCOUNT_ID: "314694303532"
   INFRASTRUCTURE: portal
 
 permissions:
@@ -32,7 +32,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecs-deploy/${{ env.ENV }}/${{ env.REGION }}
+        working-directory: deployments/portal-deploy/${{ env.ENV }}/${{ env.REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -83,7 +83,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: terraform-plan
-        path: deployments/ecs-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}/terraform.tfplan
+        path: deployments/portal-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}/terraform.tfplan
         retention-days: 1
   
   terraform-apply:
@@ -96,7 +96,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/ecs-deploy/${{ ENV }}/${{ REGION }}
+        working-directory: deployments/portal-deploy/${{ ENV }}/${{ REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -143,7 +143,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: terraform-plan
-        path: deployments/ecs-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}
+        path: deployments/portal-deploy/${{ env.ENV }}/${{ env.AWS_REGION }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Apply

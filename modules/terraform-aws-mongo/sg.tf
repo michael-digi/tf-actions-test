@@ -27,6 +27,8 @@ resource "aws_security_group" "mongo" {
   
   tags = {
     Name = "mongo-access-${var.env}-${var.region}"
+    Env = "${var.env}"
+    Region = "${var.region}"
   }
 }
 
@@ -67,6 +69,8 @@ resource "aws_security_group" "efs" {
   
   tags = {
     Name = "efs-access-${var.env}-${var.region}"
+    Env = "${var.env}"
+    Region = "${var.region}"
   }
 }
 
