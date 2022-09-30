@@ -89,7 +89,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: deployments/portal-deploy/${{ ENV }}/${{ REGION }}
+        working-directory: deployments/portal-deploy/${{ env.ENV }}/${{ env.REGION }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
