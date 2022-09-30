@@ -1,6 +1,10 @@
 name: 'ECS Deploy'
 
-on: [workflow_dispatch, push]
+on: 
+  workflow_dispatch:
+  push:
+    tags:
+      - portal
 
 env:
   AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
