@@ -1,14 +1,6 @@
 name: 'ECS Deploy'
 
-on: 
-  workflow_dispatch:
-    secrets:
-      AWS_ACCESS_KEY_ID:
-        description: 'AWS access'
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        description: 'AWS secret'
-        required: true
+on: [workflow_dispatch, push]
 
 env:
   AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
