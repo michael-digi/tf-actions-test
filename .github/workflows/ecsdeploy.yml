@@ -1,7 +1,6 @@
 name: 'ECS Deploy'
 
 on: 
-  workflow_dispatch:
   push:
     tags:
       - portal
