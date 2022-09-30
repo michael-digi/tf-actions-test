@@ -20,7 +20,7 @@ variable "account_id" {
   default = ""
 }
 
-variable "ecr_repo_admin_account" {
+variable "account_id_admin" {
   default = "314694303532"
 }
 

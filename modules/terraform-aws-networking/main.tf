@@ -17,6 +17,8 @@ resource "aws_vpc" "primary_vpc" {
 
   tags = {
     Name = "primary-${var.env}-${var.region}"
+    Env = var.env
+    Region = var.region
   }
 }
 
@@ -31,6 +33,8 @@ resource "aws_subnet" "private_subnets" {
     Name = "Private Subnet (${lookup(var.public_private_subnet_pairs[count.index], "az")})"
     Tier = "Private Subnets"
     Vpc  = "primary-${var.env}-${var.region}"
+    Env = var.env
+    Region = var.region
   }
 }
 
@@ -45,6 +49,8 @@ resource "aws_subnet" "public_subnets" {
     Name = "Public Subnet (${lookup(var.public_private_subnet_pairs[count.index], "az")})"
     Tier = "Public Subnets"
     Vpc  = "primary-${var.env}-${var.region}"
+    Env = var.env
+    Region = var.region
   }
 }
 
@@ -54,6 +60,8 @@ resource "aws_internet_gateway" "igw" {
 
   tags = {
     Name = "IGW for public subnets"
+    Env = var.env
+    Region = var.region
   }
 }
 

@@ -66,11 +66,11 @@ locals {
 }
 
 module "ecs" {
-  source = "../../modules/terraform-aws-ecs"
+  source = "../../../../modules/terraform-aws-ecs"
   private_subnets = local.private_subnet_cidr_blocks.value
   public_subnets  = local.public_subnet_cidr_blocks.value
   num_containers = var.num_containers
-  image = "${var.ecr_repo_admin_account}.dkr.ecr.${var.ecr_repo_admin_region}.amazonaws.com/gck_portal_${var.env}:latest"
+  image = "${var.account_id_admin}.dkr.ecr.${var.ecr_repo_admin_region}.amazonaws.com/gck_portal_${var.env}:latest"
   region = var.region
   vpc_id = data.aws_vpc.vpc.id
   env = var.env

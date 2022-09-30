@@ -66,7 +66,7 @@ locals {
 }
 
 module "ecs" {
-  source = "../../modules/terraform-aws-ecs"
+  source = "../../../../modules/terraform-aws-ecs"
   private_subnets = local.private_subnet_cidr_blocks.value
   public_subnets  = local.public_subnet_cidr_blocks.value
   num_containers = var.num_containers
