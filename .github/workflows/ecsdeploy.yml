@@ -2,8 +2,6 @@ name: 'ECS Deploy'
 
 on: 
   push:
-    tags:
-      - portal
 
 env:
   AWS_ACCESS_KEY_ID: '' # Will be injected in a step below
